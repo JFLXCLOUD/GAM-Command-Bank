@@ -177,7 +177,7 @@ class CommandManager:
                                    style="Red.TButton")
         remove_button.pack(side=tk.LEFT)
 
-        # Link for GAM commands
+        
         if category_name == "GAM" and link_text and link_url:
             link_label = ttk.Label(frame, text=link_text, style="Link.TLabel")
             link_label.pack(pady=(5, 0), anchor="w", padx=5)
