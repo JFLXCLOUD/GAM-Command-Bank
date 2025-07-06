@@ -10,7 +10,7 @@ Therefore, to ensure your saved commands are loaded when you open the applicatio
 
 Usage:
 
-1.  Run the `GAM Command Manager.exe` file.
+1.  Run the `GAM_Command_Bank_v0.1.0.exe` file.
 
 2.  Navigate through the tabs for GAM Commands, AD Commands, and PowerShell.
 
