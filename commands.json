@@ -1,0 +1,180 @@
+{
+    "GAM": [
+        {
+            "command": "gam group <group> members",
+            "description": "List members of a group"
+        },
+        {
+            "command": "gam user <user> suspended on",
+            "description": "Suspend a user"
+        },
+        {
+            "command": "gam user <user> unsuspended",
+            "description": "Unsuspend a user"
+        },
+        {
+            "command": "gam user <user> change password newpassword <newpassword>",
+            "description": "Change a user's password"
+        },
+        {
+            "command": "gam create group <group>",
+            "description": "Create a new group"
+        },
+        {
+            "command": "gam delete group <group>",
+            "description": "Delete a group"
+        },
+        {
+            "command": "gam user <user> add group <group>",
+            "description": "Add a user to a group"
+        },
+        {
+            "command": "gam user <user> remove group <group>",
+            "description": "Remove a user from a group"
+        },
+        {
+            "command": "gam info domain",
+            "description": "Show domain information"
+        },
+        {
+            "command": "gam user <user> delegate adminrole",
+            "description": "Delegate admin role to a user"
+        },
+        {
+            "command": "gam print delegations",
+            "description": "Show current delegations"
+        },
+        {
+            "command": "gam user <shared_user> delegate to <user>",
+            "description": "*Delegate Access to User's Account"
+        },
+        {
+            "command": "gam user <shared_user> delete delegate <user>",
+            "description": "Delete Delegate User from Account"
+        },
+        {
+            "command": "gam user <User> print delegates",
+            "description": "View Delegates for an Account"
+        },
+        {
+            "command": "gam all users delete messages query \"rfc822msgid:<message ID>\" doit",
+            "description": "Delete An Email from All Users (Internally)"
+        },
+        {
+            "command": "gam user <User Email Address> vacation on subject \"<Subject Line Text>\" message \"<Message In The Email Body>\" html start 2000-01-01 end 2999-01-01",
+            "description": "Set OOO Message"
+        },
+        {
+            "command": "gam user <File Owner Email> add drivefileacl <File ID> user <New Editor Email> role editor",
+            "description": "Add Editor to Drive File"
+        },
+        {
+            "command": "gam info user <Email Address>",
+            "description": "Show User Info"
+        }
+    ],
+    "AD": [
+        {
+            "command": "Get-ADUser -Identity <user>",
+            "description": "Get a specific user"
+        },
+        {
+            "command": "Get-ADGroup -Identity <group>",
+            "description": "Get a specific group"
+        },
+        {
+            "command": "Disable-ADAccount -Identity <user>",
+            "description": "Disable a user account"
+        },
+        {
+            "command": "Enable-ADAccount -Identity <user>",
+            "description": "Enable a user account"
+        },
+        {
+            "command": "Set-ADUser -Identity <user> -Password <securepassword>",
+            "description": "Set a user's password (use SecureString)"
+        },
+        {
+            "command": "New-ADGroup -Name <group> -GroupCategory Security -GroupScope Global",
+            "description": "Create a new security group"
+        },
+        {
+            "command": "Remove-ADGroup -Identity <group>",
+            "description": "Delete a group"
+        },
+        {
+            "command": "Add-ADGroupMember -Identity <group> -Members <user>",
+            "description": "Add a user to a group"
+        },
+        {
+            "command": "Remove-ADGroupMember -Identity <group> -Members <user>",
+            "description": "Remove a user from a group"
+        },
+        {
+            "command": "Get-ADDomain",
+            "description": "Get domain information"
+        }
+    ],
+    "PowerShell": [
+        {
+            "command": "Get-Process",
+            "description": "List all running processes"
+        },
+        {
+            "command": "Stop-Process -Id <process_id>",
+            "description": "Stop a process by its ID"
+        },
+        {
+            "command": "Get-Service",
+            "description": "List all services"
+        },
+        {
+            "command": "Start-Service -Name <service_name>",
+            "description": "Start a service"
+        },
+        {
+            "command": "Stop-Service -Name <service_name>",
+            "description": "Stop a service"
+        },
+        {
+            "command": "Get-Item <path>",
+            "description": "Get a file or folder"
+        },
+        {
+            "command": "Set-Content -Path <path> -Value <content>",
+            "description": "Set the content of a file"
+        },
+        {
+            "command": "New-Item -Path <path> -ItemType File",
+            "description": "Create a new file"
+        },
+        {
+            "command": "New-Item -Path <path> -ItemType Directory",
+            "description": "Create a new folder"
+        },
+        {
+            "command": "Remove-Item -Path <path>",
+            "description": "Delete a file or folder"
+        },
+        {
+            "command": "Get-ChildItem -Path <path>",
+            "description": "Get the files and folders in a path"
+        },
+        {
+            "command": "Get-EventLog -LogName System -EntryType Error",
+            "description": "Get system error events"
+        },
+        {
+            "command": "Restart-Computer",
+            "description": "Restart the computer"
+        },
+        {
+            "command": "Get-Credential",
+            "description": "Get a user's credentials"
+        },
+        {
+            "command": "$PSVersionTable.PSVersion",
+            "description": "Show the current PowerShell version"
+        }
+    ]
+}
