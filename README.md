@@ -2,11 +2,11 @@
 A simple application to store, fill, execute, and categorize common commands used by GAM, PS and AD.
 
 
-The application stores your commands in a file named `commands.json`. For the application to function correctly, this `commands.json` file MUST be located in the SAME folder as the `GAM Command Manager.exe` file when you run the executable.
+The application stores your commands in a file named `commands.json`. For the application to function correctly, this `commands.json` file MUST be located in the SAME folder as the `GAM Command Bank.exe` file when you run the executable.
 
 If the `commands.json` file is not found in the same folder, the application will start with an empty command list. Any commands you add during that session will be saved to a new `commands.json` file in that same folder.
 
-Therefore, to ensure your saved commands are loaded when you open the application, please keep the `commands.json` file in the same directory as the `NYH Command Manager.exe`.
+Therefore, to ensure your saved commands are loaded when you open the application, please keep the `commands.json` file in the same directory as the `GAM Command Bank.exe`.
 
 Usage:
 
