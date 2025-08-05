@@ -11,7 +11,7 @@ import tempfile
 
 class CommandManager:
     """
-    A simple application to store and categorize common commands.
+    GAM Command Bank - A modern application to store and categorize common commands.
     """
 
     def __init__(self, root):
@@ -22,18 +22,41 @@ class CommandManager:
             root (tk.Tk): The root Tkinter window.
         """
         self.root = root
-        self.root.title("NYH Command Manager") 
-        self.root.geometry("600x620")
-        self.root.resizable(False, False)
+        self.root.title("GAM Command Bank - Professional Command Manager")
+        self.root.geometry("900x750")
+        self.root.resizable(True, True)
+        self.root.minsize(800, 600)
+        
+        # Set application icon if available
+        try:
+            if os.path.exists("icon.ico"):
+                self.root.iconbitmap("icon.ico")
+        except:
+            pass
+            
+        # Modern color scheme
+        self.colors = {
+            'primary': '#2C3E50',      # Dark blue-gray
+            'secondary': '#3498DB',     # Bright blue
+            'accent': '#E74C3C',        # Red
+            'success': '#27AE60',       # Green
+            'warning': '#F39C12',       # Orange
+            'background': '#ECF0F1',    # Light gray
+            'surface': '#FFFFFF',       # White
+            'text': '#2C3E50',          # Dark text
+            'text_light': '#7F8C8D',    # Light text
+            'border': '#BDC3C7'         # Border gray
+        }
+        
         self.data_file = self._get_data_file_path("commands.json")
         self.commands = {}
         self.style = ttk.Style()
-        self.configure_style()
+        self.configure_modern_style()
 
         print(f"Data file path: {self.data_file}")
 
-        self.create_menu()  
-        self.create_widgets()
+        self.create_menu()
+        self.create_modern_widgets()
         self.load_all_commands()
 
     def create_menu(self):
@@ -64,82 +87,342 @@ class CommandManager:
             base_path = os.path.dirname(os.path.abspath(__file__)) 
         return os.path.join(base_path, filename)
 
-    def configure_style(self):
+    def configure_modern_style(self):
         """
-        Configures the visual style of the application.
+        Configures modern visual styling for the application.
         """
         self.style.theme_use('clam')
+        
+        # Configure root background
+        self.root.configure(bg=self.colors['background'])
 
-       
-        self.style.configure("TLabel", font=('Arial', 10), foreground="#333")  
-        self.style.configure("TEntry", font=('Arial', 10), foreground="#555")  
-        self.style.configure("TButton", font=('Arial', 10, 'bold'),  
-                             foreground="#fff", background="#4CAF50",
-                             relief="flat", borderwidth=0,
-                             )
-        self.style.configure("Red.TButton", font=('Arial', 10, 'bold'),  
-                             foreground="#fff", background="#FF5252",
-                             relief="flat", borderwidth=0)
-        self.style.configure("Green.TButton", font=('Arial', 12, 'bold'),  
-                             foreground="#000", background="#b6fcd5",
-                             relief="flat", borderwidth=0)
-        self.style.configure("Link.TLabel", font=('Arial', 10, 'underline'), foreground="blue", cursor="hand2") 
-        self.style.configure("TCombobox", font=('Arial', 10), foreground="#555")  
-        self.style.configure("TText", font=('Arial', 10), foreground="#555") 
-        self.style.configure("Treeview", font=('Arial', 10),
-                             background="#f0f0f0", foreground="#333",
-                             rowheight=24)
+        # Modern fonts
+        title_font = ('Segoe UI', 12, 'bold')
+        body_font = ('Segoe UI', 10)
+        button_font = ('Segoe UI', 10, 'bold')
+        
+        # Configure notebook (tabs)
+        self.style.configure("TNotebook",
+                           background=self.colors['background'],
+                           borderwidth=0)
+        self.style.configure("TNotebook.Tab",
+                           padding=[20, 12],
+                           font=title_font,
+                           background=self.colors['surface'],
+                           foreground=self.colors['text'],
+                           borderwidth=1,
+                           relief='solid')
+        self.style.map("TNotebook.Tab",
+                      background=[('selected', self.colors['secondary']),
+                                ('active', self.colors['border'])],
+                      foreground=[('selected', 'white'),
+                                ('active', self.colors['text'])])
 
-        self.style.map("TButton",
-                       foreground=[('active', '#fff'), ('disabled', '#888')],
-                       background=[('active', '#45a049'), ('disabled', '#ccc')],
-                       relief=[('pressed', 'flat'), ('!pressed', 'flat')]
-                       )
-        self.style.map("Red.TButton",
-                       foreground=[('active', '#fff'), ('disabled', '#888')],
-                       background=[('active', '#c83e4d'), ('disabled', '#ccc')],
-                       relief=[('pressed', 'flat'), ('!pressed', 'flat')]
-                       )
-        self.style.map("Green.TButton",
-                       foreground=[('active', '#000'), ('disabled', '#888')],
-                       background=[('active', '#90ee90'), ('disabled', '#ccc')],
-                       relief=[('pressed', 'flat'), ('!pressed', 'flat')]
-                       )
+        # Configure frames
+        self.style.configure("TFrame",
+                           background=self.colors['background'],
+                           relief='flat')
+        self.style.configure("Card.TFrame",
+                           background=self.colors['surface'],
+                           relief='solid',
+                           borderwidth=1)
 
-        self.status_style = ttk.Style()
-        self.status_style.configure("Statusbar.TLabel", font=('Arial', 8), foreground="#222",
-                                     background="#e0e0e0")
+        # Configure labels
+        self.style.configure("TLabel",
+                           font=body_font,
+                           foreground=self.colors['text'],
+                           background=self.colors['background'])
+        self.style.configure("Title.TLabel",
+                           font=title_font,
+                           foreground=self.colors['primary'],
+                           background=self.colors['background'])
+        self.style.configure("Link.TLabel",
+                           font=('Segoe UI', 10, 'underline'),
+                           foreground=self.colors['secondary'],
+                           background=self.colors['background'],
+                           cursor="hand2")
 
-    def create_widgets(self):
+        # Configure entries
+        self.style.configure("TEntry",
+                           font=body_font,
+                           foreground=self.colors['text'],
+                           fieldbackground=self.colors['surface'],
+                           borderwidth=2,
+                           relief='solid',
+                           insertcolor=self.colors['secondary'])
+        self.style.map("TEntry",
+                      focuscolor=[('focus', self.colors['secondary'])],
+                      bordercolor=[('focus', self.colors['secondary'])])
+
+        # Configure buttons with modern styling
+        self.style.configure("Modern.TButton",
+                           font=button_font,
+                           foreground='white',
+                           background=self.colors['secondary'],
+                           relief='flat',
+                           borderwidth=0,
+                           padding=[15, 8])
+        self.style.configure("Success.TButton",
+                           font=button_font,
+                           foreground='white',
+                           background=self.colors['success'],
+                           relief='flat',
+                           borderwidth=0,
+                           padding=[15, 8])
+        self.style.configure("Danger.TButton",
+                           font=button_font,
+                           foreground='white',
+                           background=self.colors['accent'],
+                           relief='flat',
+                           borderwidth=0,
+                           padding=[12, 6])
+        self.style.configure("Warning.TButton",
+                           font=button_font,
+                           foreground='white',
+                           background=self.colors['warning'],
+                           relief='flat',
+                           borderwidth=0,
+                           padding=[15, 8])
+
+        # Button hover effects
+        self.style.map("Modern.TButton",
+                      background=[('active', '#2980B9'), ('pressed', '#21618C')])
+        self.style.map("Success.TButton",
+                      background=[('active', '#229954'), ('pressed', '#1E8449')])
+        self.style.map("Danger.TButton",
+                      background=[('active', '#CB4335'), ('pressed', '#B03A2E')])
+        self.style.map("Warning.TButton",
+                      background=[('active', '#D68910'), ('pressed', '#B7950B')])
+
+        # Configure combobox
+        self.style.configure("TCombobox",
+                           font=body_font,
+                           foreground=self.colors['text'],
+                           fieldbackground=self.colors['surface'],
+                           borderwidth=2,
+                           relief='solid')
+        self.style.map("TCombobox",
+                      focuscolor=[('focus', self.colors['secondary'])],
+                      bordercolor=[('focus', self.colors['secondary'])])
+
+        # Configure status bar
+        self.style.configure("Statusbar.TLabel",
+                           font=('Segoe UI', 9),
+                           foreground=self.colors['text_light'],
+                           background=self.colors['primary'],
+                           padding=[10, 5])
+
+    def create_modern_widgets(self):
         """
-        Creates the GUI widgets for the application.
+        Creates modern GUI widgets with improved layout and styling.
         """
-        self.notebook = ttk.Notebook(self.root, style="TNotebook")
-        self.notebook.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
+        # Create main container with padding
+        main_container = ttk.Frame(self.root, style="TFrame")
+        main_container.pack(fill=tk.BOTH, expand=True, padx=15, pady=15)
+        
+        # Create header
+        header_frame = ttk.Frame(main_container, style="TFrame")
+        header_frame.pack(fill=tk.X, pady=(0, 20))
+        
+        # App title and description
+        title_label = ttk.Label(header_frame,
+                               text="GAM Command Bank",
+                               style="Title.TLabel",
+                               font=('Segoe UI', 18, 'bold'))
+        title_label.pack(anchor=tk.W)
+        
+        subtitle_label = ttk.Label(header_frame,
+                                  text="Professional command management for GAM, Active Directory, and PowerShell",
+                                  style="TLabel",
+                                  font=('Segoe UI', 10))
+        subtitle_label.pack(anchor=tk.W, pady=(5, 0))
 
+        # Create notebook with modern styling
+        self.notebook = ttk.Notebook(main_container, style="TNotebook")
+        self.notebook.pack(fill=tk.BOTH, expand=True, pady=(0, 15))
+
+        # Create frames for each category
         self.gam_frame = ttk.Frame(self.notebook, style="TFrame")
         self.ad_frame = ttk.Frame(self.notebook, style="TFrame")
         self.powershell_frame = ttk.Frame(self.notebook, style="TFrame")
 
-        self.notebook.add(self.gam_frame, text="GAM Commands")
-        self.notebook.add(self.ad_frame, text="AD Commands")
-        self.notebook.add(self.powershell_frame, text="PowerShell")
+        # Add tabs with icons (using Unicode symbols)
+        self.notebook.add(self.gam_frame, text="🌐 GAM Commands")
+        self.notebook.add(self.ad_frame, text="🏢 AD Commands")
+        self.notebook.add(self.powershell_frame, text="💻 PowerShell")
 
-        self.create_category_content(self.gam_frame, "GAM", "GAM Command", "Add GAM Command", link_text="Complete List of GAM Commands", link_url="https://sites.google.com/view/gam--commands/home?authuser=0")
-        self.create_category_content(self.ad_frame, "AD", "AD Command", "Add AD Command")
-        self.create_category_content(self.powershell_frame, "PowerShell", "PowerShell Command",
-                                     "Add PowerShell Command")
+        # Create content for each tab
+        self.create_modern_category_content(self.gam_frame, "GAM", "GAM Command", "Add GAM Command",
+                                          link_text="📚 Complete List of GAM Commands",
+                                          link_url="https://sites.google.com/view/gam--commands/home?authuser=0")
+        self.create_modern_category_content(self.ad_frame, "AD", "AD Command", "Add AD Command")
+        self.create_modern_category_content(self.powershell_frame, "PowerShell", "PowerShell Command",
+                                          "Add PowerShell Command")
 
-        self.load_commands_button = ttk.Button(self.root, text="Load Commands", command=self.load_all_commands,
-                                             style="TButton")
-        self.load_commands_button.pack(pady=5, anchor="center")
+        # Create bottom toolbar
+        toolbar_frame = ttk.Frame(main_container, style="Card.TFrame")
+        toolbar_frame.pack(fill=tk.X, pady=(0, 10))
+        
+        toolbar_inner = ttk.Frame(toolbar_frame, style="TFrame")
+        toolbar_inner.pack(fill=tk.X, padx=15, pady=10)
+        
+        self.load_commands_button = ttk.Button(toolbar_inner,
+                                             text="🔄 Reload Commands",
+                                             command=self.load_all_commands,
+                                             style="Modern.TButton")
+        self.load_commands_button.pack(side=tk.LEFT)
+        
+        # Add version info
+        version_label = ttk.Label(toolbar_inner,
+                                 text="v2.0 - Enhanced Edition",
+                                 style="TLabel",
+                                 font=('Segoe UI', 9))
+        version_label.pack(side=tk.RIGHT)
 
-        self.status_bar = ttk.Label(self.root, text="Ready", anchor=tk.W, style="Statusbar.TLabel")
+        # Create modern status bar
+        self.status_bar = ttk.Label(self.root,
+                                   text="Ready - GAM Command Bank Enhanced Edition",
+                                   anchor=tk.W,
+                                   style="Statusbar.TLabel")
         self.status_bar.pack(side=tk.BOTTOM, fill=tk.X)
 
     def open_web_link(self, url):
         """Opens the given URL in the default web browser."""
         webbrowser.open_new(url)
+
+    def create_modern_category_content(self, frame, category_name, command_label_text, add_button_text, link_text=None, link_url=None):
+        """
+        Creates modern content for a category frame with improved layout and styling.
+
+        Args:
+            frame (ttk.Frame): The frame to add the content to.
+            category_name (str): The name of the category.
+            command_label_text (str): The text for the command label.
+            add_button_text (str): The text for the add button.
+            link_text (str, optional): Text for the clickable link. Defaults to None.
+            link_url (str, optional): URL to open when the link is clicked. Defaults to None.
+        """
+        # Create main container with padding
+        main_container = ttk.Frame(frame, style="TFrame")
+        main_container.pack(fill=tk.BOTH, expand=True, padx=20, pady=20)
+        
+        # Create input section card
+        input_card = ttk.Frame(main_container, style="Card.TFrame")
+        input_card.pack(fill=tk.X, pady=(0, 15))
+        
+        input_container = ttk.Frame(input_card, style="TFrame")
+        input_container.pack(fill=tk.X, padx=20, pady=15)
+        
+        # Input section title
+        input_title = ttk.Label(input_container, text=f"Add New {category_name} Command", style="Title.TLabel")
+        input_title.pack(anchor=tk.W, pady=(0, 15))
+
+        # Command input with modern styling
+        command_label = ttk.Label(input_container, text=command_label_text + ":", style="TLabel")
+        command_label.pack(anchor=tk.W, pady=(0, 5))
+        command_entry = ttk.Entry(input_container, width=70, style="TEntry", font=('Consolas', 10))
+        command_entry.pack(fill=tk.X, pady=(0, 15))
+
+        # Description input
+        description_label = ttk.Label(input_container, text="Description:", style="TLabel")
+        description_label.pack(anchor=tk.W, pady=(0, 5))
+        description_entry = ttk.Entry(input_container, width=70, style="TEntry")
+        description_entry.pack(fill=tk.X, pady=(0, 15))
+
+        # Action buttons
+        button_container = ttk.Frame(input_container, style="TFrame")
+        button_container.pack(fill=tk.X)
+
+        add_button = ttk.Button(button_container, text=f"➕ {add_button_text}",
+                                command=lambda: self.add_command(category_name, command_entry.get(),
+                                                                 description_entry.get()),
+                                style="Success.TButton")
+        add_button.pack(side=tk.LEFT, padx=(0, 10))
+
+        remove_button = ttk.Button(button_container, text="🗑️ Remove Selected",
+                                   command=lambda: self.remove_command(category_name, frame),
+                                   style="Danger.TButton")
+        remove_button.pack(side=tk.LEFT)
+
+        # Add link for GAM commands
+        if category_name == "GAM" and link_text and link_url:
+            link_label = ttk.Label(button_container, text=link_text, style="Link.TLabel")
+            link_label.pack(side=tk.RIGHT)
+            link_label.bind("<Button-1>", lambda event, url=link_url: self.open_web_link(url))
+
+        # Command execution section
+        execution_card = ttk.Frame(main_container, style="Card.TFrame")
+        execution_card.pack(fill=tk.BOTH, expand=True)
+        
+        execution_container = ttk.Frame(execution_card, style="TFrame")
+        execution_container.pack(fill=tk.BOTH, expand=True, padx=20, pady=15)
+        
+        # Execution section title
+        execution_title = ttk.Label(execution_container, text="Execute Commands", style="Title.TLabel")
+        execution_title.pack(anchor=tk.W, pady=(0, 15))
+
+        # Command selection
+        select_label = ttk.Label(execution_container, text="Select Command:", style="TLabel")
+        select_label.pack(anchor=tk.W, pady=(0, 5))
+        description_combobox = ttk.Combobox(execution_container, width=70, state="readonly", style="TCombobox")
+        description_combobox.pack(fill=tk.X, pady=(0, 15))
+        description_combobox.bind("<<ComboboxSelected>>",
+                                 lambda event: self.update_command_display(event, category_name, frame))
+
+        # Dynamic input fields container
+        input_frame = ttk.Frame(execution_container, style="TFrame")
+        input_frame.pack(fill=tk.X, pady=(0, 15))
+
+        # Command output area with modern styling
+        output_label = ttk.Label(execution_container, text="Command Output:", style="TLabel")
+        output_label.pack(anchor=tk.W, pady=(0, 5))
+        
+        text_frame = ttk.Frame(execution_container, style="TFrame")
+        text_frame.pack(fill=tk.BOTH, expand=True, pady=(0, 15))
+        
+        text_area = tk.Text(text_frame, height=12, state=tk.DISABLED,
+                           font=('Consolas', 10),
+                           bg=self.colors['surface'],
+                           fg=self.colors['text'],
+                           selectbackground=self.colors['secondary'],
+                           relief='solid',
+                           borderwidth=2,
+                           wrap=tk.WORD)
+        
+        # Add scrollbar to text area
+        scrollbar = ttk.Scrollbar(text_frame, orient=tk.VERTICAL, command=text_area.yview)
+        text_area.configure(yscrollcommand=scrollbar.set)
+        
+        text_area.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+
+        # Action buttons for command execution
+        action_frame = ttk.Frame(execution_container, style="TFrame")
+        action_frame.pack(fill=tk.X)
+
+        build_button = ttk.Button(action_frame, text="🔧 Build Command",
+                                  command=lambda: self.display_constructed_command(category_name, frame),
+                                  style="Modern.TButton")
+        build_button.pack(side=tk.LEFT, padx=(0, 10))
+
+        copy_button = ttk.Button(action_frame, text="📋 Copy to Clipboard",
+                                 command=lambda: self.copy_command(text_area.get("1.0", tk.END)),
+                                 style="Modern.TButton")
+        copy_button.pack(side=tk.LEFT, padx=(0, 10))
+
+        execute_button = ttk.Button(action_frame, text="▶️ Execute",
+                                    command=lambda: self.execute_command(category_name, text_area.get("1.0", tk.END), frame),
+                                    style="Success.TButton")
+        execute_button.pack(side=tk.LEFT)
+
+        # Store references for later use
+        frame.button_frame = action_frame
+        frame.command_entry = command_entry
+        frame.description_entry = description_entry
+        frame.text_area = text_area
+        frame.description_combobox = description_combobox
+        frame.input_widgets = {}
+        frame.input_frame = input_frame
 
     def create_category_content(self, frame, category_name, command_label_text, add_button_text, link_text=None, link_url=None):
         """
