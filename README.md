@@ -4,8 +4,6 @@ A modern, professional command management application for GAM (Google Admin Mana
 
 ![GAM Command Bank](https://img.shields.io/badge/Version-2.0-blue) ![License](https://img.shields.io/badge/License-MIT-green) ![Platform](https://img.shields.io/badge/Platform-Web%20%7C%20Desktop-lightgrey)
 
-## ✨ What's New in Enhanced Edition
-
 ### 🎨 Modern Web Interface
 - **Beautiful Design**: Professional, modern UI with card-based layout
 - **Dark Mode**: Toggle between light and dark themes
@@ -158,14 +156,13 @@ Modify CSS custom properties in `styles.css`:
 GAM-Command-Bank/
 ├── web-version/                 # Modern web interface
 │   ├── index.html              # Main HTML file
-│   ├── styles.css              # Modern CSS with dark mode
+│   ├── styles.css              # CSS with dark mode
 │   ├── app.js                  # Application logic
 │   └── starfield.js            # Interactive background
 ├── command_bank.py             # Enhanced Python GUI
 ├── commands.json               # Default command database
 ├── icon.ico                    # Application icon
-├── README.md                   # Original documentation
-└── README-Enhanced.md          # This enhanced documentation
+├── README.md                   # Documentation
 ```
 
 ## 🎯 Use Cases
