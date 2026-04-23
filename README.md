@@ -12,10 +12,19 @@ A command management tool for GAM (Google Admin Management), Active Directory, a
 
 ## Getting Started
 
+### Windows Executable (Recommended)
+A pre-built Windows executable is available on the [Releases](https://github.com/JFLXCLOUD/GAM-Command-Bank/releases) page.
+
+1. Download `GAM_Command_Bank.exe` and `commands.json` from the latest release
+2. Place both files in the same folder
+3. Double-click `GAM_Command_Bank.exe` to launch
+
+Note: Windows may show a SmartScreen warning on first launch because the executable is unsigned. Click "More info" then "Run anyway" to proceed. The application does not require installation and stores all data locally.
+
 ### Web Version
 Open `web-version/index.html` in any modern browser. Commands are saved to LocalStorage.
 
-### Desktop Version
+### Desktop Version (Python)
 Requires Python 3.x with tkinter (included by default on most systems).
 
 ```
