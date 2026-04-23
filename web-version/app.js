@@ -1,479 +1,383 @@
-// GAM Command Bank - Web Application JavaScript
+'use strict';
 
 class CommandBankApp {
     constructor() {
-        this.commands = {
-            gam: [],
-            ad: [],
-            powershell: []
-        };
-        
-        this.currentTheme = localStorage.getItem('theme') || 'light';
-        this.starfield = null;
-        
+        this.commands = { gam: [], ad: [], powershell: [] };
+        this.theme = localStorage.getItem('cbTheme') || 'dark';
+        this.addPanelOpen = { gam: false, ad: false, powershell: false };
+        this.searchQuery = '';
+        this._statusTimer = null;
         this.init();
     }
 
     init() {
         this.loadCommands();
-        this.setupEventListeners();
-        this.initializeStarfield();
         this.applyTheme();
-        this.populateCommandSelects();
-        this.showToast('Welcome to GAM Command Bank Enhanced Web Edition!', 'success');
+        this.populateSelects();
+        this.updateCounts();
+        this.bindEvents();
+        this.setStatus('● Ready');
     }
 
-    // Theme Management
+    // ── Theme ──────────────────────────────────────────────────────────────
     applyTheme() {
-        document.documentElement.setAttribute('data-theme', this.currentTheme);
-        const themeIcon = document.querySelector('#themeToggle i');
-        themeIcon.className = this.currentTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
-        localStorage.setItem('theme', this.currentTheme);
+        document.documentElement.setAttribute('data-theme', this.theme);
+        document.getElementById('themeToggle').textContent = this.theme === 'dark' ? '☽' : '☀';
+        localStorage.setItem('cbTheme', this.theme);
     }
 
     toggleTheme() {
-        this.currentTheme = this.currentTheme === 'light' ? 'dark' : 'light';
+        this.theme = this.theme === 'dark' ? 'light' : 'dark';
         this.applyTheme();
-        this.showToast(`Switched to ${this.currentTheme} mode`, 'success');
+        this.setStatus(`${this.theme === 'dark' ? '☽' : '☀'} Switched to ${this.theme} mode`);
     }
 
-    // Starfield Integration
-    initializeStarfield() {
-        try {
-            this.starfield = new CalmingStarfield({
-                container: '#starfield-background',
-                starCount: 150,
-                driftSensitivity: 0.3,
-                colors: ['#3498DB', '#9B59B6', '#FFFFFF', '#F8C9D4', '#87CEEB'],
-                reducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches
-            });
-        } catch (error) {
-            console.warn('Starfield component not available:', error);
-        }
-    }
-
-    // Event Listeners
-    setupEventListeners() {
-        // Theme toggle
+    // ── Events ─────────────────────────────────────────────────────────────
+    bindEvents() {
         document.getElementById('themeToggle').addEventListener('click', () => this.toggleTheme());
 
-        // Tab navigation
         document.querySelectorAll('.tab-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => this.switchTab(e.target.closest('.tab-btn').dataset.tab));
+            btn.addEventListener('click', () => this.switchTab(btn.dataset.tab));
         });
 
-        // Keyboard shortcuts
-        document.addEventListener('keydown', (e) => this.handleKeyboardShortcuts(e));
+        const searchInput = document.getElementById('searchInput');
+        searchInput.addEventListener('input', () => {
+            this.searchQuery = searchInput.value.trim().toLowerCase();
+            this.onSearch();
+        });
+        document.getElementById('searchClear').addEventListener('click', () => {
+            searchInput.value = '';
+            this.searchQuery = '';
+            this.onSearch();
+        });
 
-        // Auto-save on input changes
-        document.querySelectorAll('input, select, textarea').forEach(element => {
-            element.addEventListener('change', () => this.saveCommands());
+        document.addEventListener('keydown', e => {
+            if (e.ctrlKey || e.metaKey) {
+                if (e.key === '1') { e.preventDefault(); this.switchTab('gam'); }
+                if (e.key === '2') { e.preventDefault(); this.switchTab('ad'); }
+                if (e.key === '3') { e.preventDefault(); this.switchTab('powershell'); }
+                if (e.key === 'd') { e.preventDefault(); this.toggleTheme(); }
+            }
         });
     }
 
-    handleKeyboardShortcuts(e) {
-        if (e.ctrlKey || e.metaKey) {
-            switch (e.key) {
-                case '1':
-                    e.preventDefault();
-                    this.switchTab('gam');
-                    break;
-                case '2':
-                    e.preventDefault();
-                    this.switchTab('ad');
-                    break;
-                case '3':
-                    e.preventDefault();
-                    this.switchTab('powershell');
-                    break;
-                case 'd':
-                    e.preventDefault();
-                    this.toggleTheme();
-                    break;
-            }
+    // ── Tabs ───────────────────────────────────────────────────────────────
+    switchTab(tab) {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
+        document.getElementById(`${tab}-tab`).classList.add('active');
+    }
+
+    // ── Search ─────────────────────────────────────────────────────────────
+    onSearch() {
+        const q = this.searchQuery;
+        ['gam', 'ad', 'powershell'].forEach(cat => {
+            const select = document.getElementById(`${cat}-select`);
+            const filtered = q
+                ? this.commands[cat].filter(c =>
+                    c.command.toLowerCase().includes(q) ||
+                    c.description.toLowerCase().includes(q))
+                : this.commands[cat];
+
+            select.innerHTML = '<option value="">Choose a command…</option>';
+            filtered.forEach(cmd => {
+                const realIdx = this.commands[cat].indexOf(cmd);
+                const opt = document.createElement('option');
+                opt.value = realIdx;
+                opt.textContent = cmd.description + (cmd.favorite ? ' ★' : '');
+                select.appendChild(opt);
+            });
+
+            document.getElementById(`${cat}-output`).value = '';
+            document.getElementById(`${cat}-params`).innerHTML = '';
+            document.getElementById(`${cat}-fav`).textContent = '☆';
+        });
+    }
+
+    // ── Populate ───────────────────────────────────────────────────────────
+    populateSelects() {
+        ['gam', 'ad', 'powershell'].forEach(cat => {
+            const select = document.getElementById(`${cat}-select`);
+            const current = select.value;
+            select.innerHTML = '<option value="">Choose a command…</option>';
+            this.commands[cat].forEach((cmd, i) => {
+                const opt = document.createElement('option');
+                opt.value = i;
+                opt.textContent = cmd.description + (cmd.favorite ? ' ★' : '');
+                select.appendChild(opt);
+            });
+            if (current !== '') select.value = current;
+        });
+    }
+
+    updateCounts() {
+        document.getElementById('gam-count').textContent = `(${this.commands.gam.length})`;
+        document.getElementById('ad-count').textContent = `(${this.commands.ad.length})`;
+        document.getElementById('ps-count').textContent = `(${this.commands.powershell.length})`;
+        const total = this.commands.gam.length + this.commands.ad.length + this.commands.powershell.length;
+        document.getElementById('total-count').textContent = `${total} total`;
+    }
+
+    // ── Add Panel ──────────────────────────────────────────────────────────
+    toggleAddPanel(cat) {
+        this.addPanelOpen[cat] = !this.addPanelOpen[cat];
+        document.getElementById(`${cat}-add-panel`).classList.toggle('open', this.addPanelOpen[cat]);
+    }
+
+    // ── Select Change ──────────────────────────────────────────────────────
+    onSelectChange(cat) {
+        const select = document.getElementById(`${cat}-select`);
+        const idx = select.value;
+        const paramsContainer = document.getElementById(`${cat}-params`);
+        paramsContainer.innerHTML = '';
+
+        if (idx === '') {
+            document.getElementById(`${cat}-output`).value = '';
+            document.getElementById(`${cat}-fav`).textContent = '☆';
+            return;
         }
+
+        const cmd = this.commands[cat][idx];
+        if (!cmd) return;
+
+        document.getElementById(`${cat}-fav`).textContent = cmd.favorite ? '★' : '☆';
+
+        cmd.last_used = new Date().toISOString();
+        cmd.use_count = (cmd.use_count || 0) + 1;
+        this.saveCommands();
+
+        const placeholders = this.extractPlaceholders(cmd.command);
+        placeholders.forEach(ph => {
+            const row = document.createElement('div');
+            row.className = 'param-row';
+            const label = document.createElement('span');
+            label.className = 'param-label';
+            label.textContent = `‹${ph}›`;
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.className = 'param-input';
+            input.dataset.placeholder = ph;
+            input.addEventListener('input', () => this.buildCommand(cat));
+            row.appendChild(label);
+            row.appendChild(input);
+            paramsContainer.appendChild(row);
+        });
+
+        this.buildCommand(cat);
     }
 
-    // Tab Management
-    switchTab(tabName) {
-        // Update tab buttons
-        document.querySelectorAll('.tab-btn').forEach(btn => {
-            btn.classList.remove('active');
-        });
-        document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
-
-        // Update tab content
-        document.querySelectorAll('.tab-content').forEach(content => {
-            content.classList.remove('active');
-        });
-        document.getElementById(`${tabName}-tab`).classList.add('active');
-
-        this.updateStatus(`Switched to ${tabName.toUpperCase()} commands`);
+    extractPlaceholders(command) {
+        const matches = command.match(/<([^>]+)>/g);
+        if (!matches) return [];
+        return [...new Set(matches.map(m => m.slice(1, -1)))];
     }
 
-    // Command Management
-    loadCommands() {
-        const savedCommands = localStorage.getItem('gamCommandBankCommands');
-        if (savedCommands) {
-            try {
-                this.commands = JSON.parse(savedCommands);
-            } catch (error) {
-                console.error('Error loading saved commands:', error);
-                this.loadDefaultCommands();
-            }
+    buildCommand(cat) {
+        const select = document.getElementById(`${cat}-select`);
+        const idx = select.value;
+        const output = document.getElementById(`${cat}-output`);
+
+        if (idx === '') { output.value = ''; return; }
+
+        const cmd = this.commands[cat][idx];
+        if (!cmd) return;
+
+        let result = cmd.command;
+        document.querySelectorAll(`#${cat}-params .param-input`).forEach(input => {
+            const ph = input.dataset.placeholder;
+            result = result.replace(`<${ph}>`, input.value || `<${ph}>`);
+        });
+        output.value = result;
+    }
+
+    // ── CRUD ───────────────────────────────────────────────────────────────
+    addCommand(cat) {
+        const cmdInput = document.getElementById(`${cat}-command`);
+        const descInput = document.getElementById(`${cat}-description`);
+        const command = cmdInput.value.trim();
+        const description = descInput.value.trim();
+
+        if (!command) { this.setStatus('✖ Command cannot be empty.'); return; }
+        if (!description) { this.setStatus('✖ Description cannot be empty.'); return; }
+
+        const isDupe = this.commands[cat].some(c =>
+            c.command === command && c.description === description);
+        if (isDupe) { this.setStatus('✖ Duplicate command.'); return; }
+
+        this.commands[cat].push({
+            command, description,
+            favorite: false, last_used: null, use_count: 0
+        });
+        this.saveCommands();
+        this.populateSelects();
+        this.updateCounts();
+
+        cmdInput.value = '';
+        descInput.value = '';
+        this.addPanelOpen[cat] = false;
+        document.getElementById(`${cat}-add-panel`).classList.remove('open');
+
+        this.setStatus(`✔ Added to ${cat.toUpperCase()}.`);
+    }
+
+    removeCommand(cat) {
+        const select = document.getElementById(`${cat}-select`);
+        const idx = select.value;
+        if (idx === '') { this.setStatus('No command selected.'); return; }
+
+        const cmd = this.commands[cat][idx];
+        if (!confirm(`Remove "${cmd.description}"?`)) return;
+
+        this.commands[cat].splice(idx, 1);
+        this.saveCommands();
+        this.populateSelects();
+        this.updateCounts();
+        document.getElementById(`${cat}-output`).value = '';
+        document.getElementById(`${cat}-params`).innerHTML = '';
+        document.getElementById(`${cat}-fav`).textContent = '☆';
+        this.setStatus(`⌫ Removed "${cmd.description}".`);
+    }
+
+    toggleFavorite(cat) {
+        const select = document.getElementById(`${cat}-select`);
+        const idx = select.value;
+        if (idx === '') return;
+
+        const cmd = this.commands[cat][idx];
+        if (!cmd) return;
+
+        cmd.favorite = !cmd.favorite;
+        document.getElementById(`${cat}-fav`).textContent = cmd.favorite ? '★' : '☆';
+        this.saveCommands();
+        this.populateSelects();
+        select.value = idx;
+        this.setStatus(`${cmd.favorite ? '★ Added to' : 'Removed from'} favorites: "${cmd.description}"`);
+    }
+
+    // ── Actions ────────────────────────────────────────────────────────────
+    copyCommand(cat) {
+        const text = document.getElementById(`${cat}-output`).value.trim();
+        if (!text) { this.setStatus('Nothing to copy.'); return; }
+
+        const select = document.getElementById(`${cat}-select`);
+        const idx = select.value;
+        if (idx !== '' && this.commands[cat][idx]) {
+            this.commands[cat][idx].copied_at = new Date().toISOString();
+            this.saveCommands();
+        }
+
+        navigator.clipboard.writeText(text).then(() => {
+            this.setStatus('⎘ Copied to clipboard.');
+        }).catch(() => {
+            const ta = document.getElementById(`${cat}-output`);
+            ta.removeAttribute('readonly');
+            ta.select();
+            document.execCommand('copy');
+            ta.setAttribute('readonly', '');
+            this.setStatus('⎘ Copied to clipboard.');
+        });
+    }
+
+    executeCommand(cat) {
+        const text = document.getElementById(`${cat}-output`).value.trim();
+        if (!text) { this.setStatus('Nothing to execute.'); return; }
+
+        this.copyCommand(cat);
+        if (cat === 'gam') {
+            window.open('https://shell.cloud.google.com/', '_blank');
+            this.setStatus('↗ Google Cloud Shell opened — command is on your clipboard.');
         } else {
-            this.loadDefaultCommands();
+            this.setStatus('⎘ Command copied — paste into your terminal to execute.');
         }
     }
 
-    loadDefaultCommands() {
-        // Load default commands from the original commands.json structure
+    clearOutput(cat) {
+        document.getElementById(`${cat}-output`).value = '';
+        document.getElementById(`${cat}-params`).innerHTML = '';
+        document.getElementById(`${cat}-select`).value = '';
+        document.getElementById(`${cat}-fav`).textContent = '☆';
+        this.setStatus('Cleared.');
+    }
+
+    // ── Persistence ────────────────────────────────────────────────────────
+    loadCommands() {
+        const saved = localStorage.getItem('gamCommandBank_v3');
+        if (saved) {
+            try { this.commands = JSON.parse(saved); return; } catch {}
+        }
+        this.loadDefaults();
+    }
+
+    loadDefaults() {
         this.commands = {
             gam: [
-                { command: "gam group <group> members", description: "List members of a group" },
-                { command: "gam user <user> suspended on", description: "Suspend a user" },
-                { command: "gam user <user> unsuspended", description: "Unsuspend a user" },
-                { command: "gam user <user> change password newpassword <newpassword>", description: "Change a user's password" },
-                { command: "gam create group <group>", description: "Create a new group" },
-                { command: "gam delete group <group>", description: "Delete a group" },
-                { command: "gam user <user> add group <group>", description: "Add a user to a group" },
-                { command: "gam user <user> remove group <group>", description: "Remove a user from a group" },
-                { command: "gam info domain", description: "Show domain information" },
-                { command: "gam info user <Email Address>", description: "Show User Info" }
+                { command: "gam group <group> members", description: "List members of a group", favorite: false, use_count: 0, last_used: null },
+                { command: "gam user <user> suspended on", description: "Suspend a user", favorite: false, use_count: 0, last_used: null },
+                { command: "gam user <user> unsuspended", description: "Unsuspend a user", favorite: false, use_count: 0, last_used: null },
+                { command: "gam user <user> change password newpassword <newpassword>", description: "Change a user's password", favorite: false, use_count: 0, last_used: null },
+                { command: "gam create group <group>", description: "Create a new group", favorite: false, use_count: 0, last_used: null },
+                { command: "gam delete group <group>", description: "Delete a group", favorite: false, use_count: 0, last_used: null },
+                { command: "gam user <user> add group <group>", description: "Add a user to a group", favorite: false, use_count: 0, last_used: null },
+                { command: "gam user <user> remove group <group>", description: "Remove a user from a group", favorite: false, use_count: 0, last_used: null },
+                { command: "gam info domain", description: "Show domain information", favorite: false, use_count: 0, last_used: null },
+                { command: "gam info user <Email Address>", description: "Show user info", favorite: false, use_count: 0, last_used: null },
             ],
             ad: [
-                { command: "Get-ADUser -Identity <user>", description: "Get a specific user" },
-                { command: "Get-ADGroup -Identity <group>", description: "Get a specific group" },
-                { command: "Disable-ADAccount -Identity <user>", description: "Disable a user account" },
-                { command: "Enable-ADAccount -Identity <user>", description: "Enable a user account" },
-                { command: "Set-ADUser -Identity <user> -Password <securepassword>", description: "Set a user's password (use SecureString)" },
-                { command: "New-ADGroup -Name <group> -GroupCategory Security -GroupScope Global", description: "Create a new security group" },
-                { command: "Remove-ADGroup -Identity <group>", description: "Delete a group" },
-                { command: "Add-ADGroupMember -Identity <group> -Members <user>", description: "Add a user to a group" },
-                { command: "Remove-ADGroupMember -Identity <group> -Members <user>", description: "Remove a user from a group" },
-                { command: "Get-ADDomain", description: "Get domain information" }
+                { command: "Get-ADUser -Identity <user>", description: "Get a specific user", favorite: false, use_count: 0, last_used: null },
+                { command: "Get-ADGroup -Identity <group>", description: "Get a specific group", favorite: false, use_count: 0, last_used: null },
+                { command: "Disable-ADAccount -Identity <user>", description: "Disable a user account", favorite: false, use_count: 0, last_used: null },
+                { command: "Enable-ADAccount -Identity <user>", description: "Enable a user account", favorite: false, use_count: 0, last_used: null },
+                { command: "Set-ADUser -Identity <user> -Password <securepassword>", description: "Set a user's password", favorite: false, use_count: 0, last_used: null },
+                { command: "New-ADGroup -Name <group> -GroupCategory Security -GroupScope Global", description: "Create a new security group", favorite: false, use_count: 0, last_used: null },
+                { command: "Remove-ADGroup -Identity <group>", description: "Delete a group", favorite: false, use_count: 0, last_used: null },
+                { command: "Add-ADGroupMember -Identity <group> -Members <user>", description: "Add a user to a group", favorite: false, use_count: 0, last_used: null },
+                { command: "Remove-ADGroupMember -Identity <group> -Members <user>", description: "Remove a user from a group", favorite: false, use_count: 0, last_used: null },
+                { command: "Get-ADDomain", description: "Get domain information", favorite: false, use_count: 0, last_used: null },
             ],
             powershell: [
-                { command: "Get-Process", description: "List all running processes" },
-                { command: "Stop-Process -Id <process_id>", description: "Stop a process by its ID" },
-                { command: "Get-Service", description: "List all services" },
-                { command: "Start-Service -Name <service_name>", description: "Start a service" },
-                { command: "Stop-Service -Name <service_name>", description: "Stop a service" },
-                { command: "Get-Item <path>", description: "Get a file or folder" },
-                { command: "Set-Content -Path <path> -Value <content>", description: "Set the content of a file" },
-                { command: "New-Item -Path <path> -ItemType File", description: "Create a new file" },
-                { command: "New-Item -Path <path> -ItemType Directory", description: "Create a new folder" },
-                { command: "Remove-Item -Path <path>", description: "Delete a file or folder" },
-                { command: "Get-ChildItem -Path <path>", description: "Get the files and folders in a path" },
-                { command: "Get-EventLog -LogName System -EntryType Error", description: "Get system error events" },
-                { command: "Restart-Computer", description: "Restart the computer" },
-                { command: "Get-Credential", description: "Get a user's credentials" },
-                { command: "$PSVersionTable.PSVersion", description: "Show the current PowerShell version" }
+                { command: "Get-Process", description: "List all running processes", favorite: false, use_count: 0, last_used: null },
+                { command: "Stop-Process -Id <process_id>", description: "Stop a process by ID", favorite: false, use_count: 0, last_used: null },
+                { command: "Get-Service", description: "List all services", favorite: false, use_count: 0, last_used: null },
+                { command: "Start-Service -Name <service_name>", description: "Start a service", favorite: false, use_count: 0, last_used: null },
+                { command: "Stop-Service -Name <service_name>", description: "Stop a service", favorite: false, use_count: 0, last_used: null },
+                { command: "Get-Item <path>", description: "Get a file or folder", favorite: false, use_count: 0, last_used: null },
+                { command: "New-Item -Path <path> -ItemType File", description: "Create a new file", favorite: false, use_count: 0, last_used: null },
+                { command: "New-Item -Path <path> -ItemType Directory", description: "Create a new folder", favorite: false, use_count: 0, last_used: null },
+                { command: "Remove-Item -Path <path>", description: "Delete a file or folder", favorite: false, use_count: 0, last_used: null },
+                { command: "Get-ChildItem -Path <path>", description: "Get files and folders at a path", favorite: false, use_count: 0, last_used: null },
+                { command: "Get-EventLog -LogName System -EntryType Error", description: "Get system error events", favorite: false, use_count: 0, last_used: null },
+                { command: "Restart-Computer", description: "Restart the computer", favorite: false, use_count: 0, last_used: null },
+                { command: "Get-Credential", description: "Get user credentials", favorite: false, use_count: 0, last_used: null },
+                { command: "$PSVersionTable.PSVersion", description: "Show PowerShell version", favorite: false, use_count: 0, last_used: null },
             ]
         };
         this.saveCommands();
     }
 
     saveCommands() {
-        try {
-            localStorage.setItem('gamCommandBankCommands', JSON.stringify(this.commands));
-        } catch (error) {
-            console.error('Error saving commands:', error);
-            this.showToast('Error saving commands to local storage', 'error');
-        }
+        localStorage.setItem('gamCommandBank_v3', JSON.stringify(this.commands));
     }
 
-    populateCommandSelects() {
-        ['gam', 'ad', 'powershell'].forEach(category => {
-            const select = document.getElementById(`${category}-select`);
-            select.innerHTML = '<option value="">Choose a command...</option>';
-            
-            this.commands[category].forEach((cmd, index) => {
-                const option = document.createElement('option');
-                option.value = index;
-                option.textContent = cmd.description;
-                select.appendChild(option);
-            });
-        });
-    }
-
-    // Command Operations
-    addCommand(category) {
-        const commandInput = document.getElementById(`${category}-command`);
-        const descriptionInput = document.getElementById(`${category}-description`);
-        
-        const command = commandInput.value.trim();
-        const description = descriptionInput.value.trim();
-        
-        if (!command) {
-            this.showToast('Command cannot be empty', 'error');
-            commandInput.focus();
-            return;
-        }
-        
-        if (!description) {
-            this.showToast('Description cannot be empty', 'error');
-            descriptionInput.focus();
-            return;
-        }
-        
-        // Check for duplicates
-        const isDuplicate = this.commands[category].some(cmd => 
-            cmd.command === command && cmd.description === description
-        );
-        
-        if (isDuplicate) {
-            this.showToast('This command already exists', 'warning');
-            return;
-        }
-        
-        // Add the command
-        this.commands[category].push({ command, description });
-        this.saveCommands();
-        this.populateCommandSelects();
-        
-        // Clear inputs
-        commandInput.value = '';
-        descriptionInput.value = '';
-        
-        this.showToast(`Command added to ${category.toUpperCase()} category`, 'success');
-        this.updateStatus(`Added new ${category.toUpperCase()} command`);
-    }
-
-    removeCommand(category) {
-        const select = document.getElementById(`${category}-select`);
-        const selectedIndex = select.value;
-        
-        if (!selectedIndex) {
-            this.showToast('Please select a command to remove', 'warning');
-            return;
-        }
-        
-        const commandToRemove = this.commands[category][selectedIndex];
-        
-        if (confirm(`Are you sure you want to remove "${commandToRemove.description}"?`)) {
-            this.commands[category].splice(selectedIndex, 1);
-            this.saveCommands();
-            this.populateCommandSelects();
-            
-            // Clear the output and parameters
-            document.getElementById(`${category}-output`).value = '';
-            document.getElementById(`${category}-params`).innerHTML = '';
-            
-            this.showToast(`Command removed from ${category.toUpperCase()} category`, 'success');
-            this.updateStatus(`Removed ${category.toUpperCase()} command`);
-        }
-    }
-
-    updateCommandDisplay(category) {
-        const select = document.getElementById(`${category}-select`);
-        const selectedIndex = select.value;
-        const paramsContainer = document.getElementById(`${category}-params`);
-        
-        // Clear previous parameters
-        paramsContainer.innerHTML = '';
-        
-        if (!selectedIndex) {
-            document.getElementById(`${category}-output`).value = '';
-            return;
-        }
-        
-        const command = this.commands[category][selectedIndex];
-        const placeholders = this.extractPlaceholders(command.command);
-        
-        if (placeholders.length > 0) {
-            placeholders.forEach(placeholder => {
-                const paramGroup = document.createElement('div');
-                paramGroup.className = 'param-group';
-                
-                const label = document.createElement('label');
-                label.textContent = `${placeholder}:`;
-                
-                const input = document.createElement('input');
-                input.type = 'text';
-                input.className = 'param-input';
-                input.placeholder = `Enter ${placeholder}`;
-                input.dataset.placeholder = placeholder;
-                input.addEventListener('input', () => this.buildCommand(category));
-                
-                paramGroup.appendChild(label);
-                paramGroup.appendChild(input);
-                paramsContainer.appendChild(paramGroup);
-            });
-        }
-        
-        this.buildCommand(category);
-    }
-
-    extractPlaceholders(command) {
-        const matches = command.match(/<([^>]+)>/g);
-        return matches ? matches.map(match => match.slice(1, -1)) : [];
-    }
-
-    buildCommand(category) {
-        const select = document.getElementById(`${category}-select`);
-        const selectedIndex = select.value;
-        const output = document.getElementById(`${category}-output`);
-        
-        if (!selectedIndex) {
-            output.value = '';
-            return;
-        }
-        
-        let command = this.commands[category][selectedIndex].command;
-        const paramInputs = document.querySelectorAll(`#${category}-params .param-input`);
-        
-        paramInputs.forEach(input => {
-            const placeholder = input.dataset.placeholder;
-            const value = input.value.trim();
-            command = command.replace(`<${placeholder}>`, value || `<${placeholder}>`);
-        });
-        
-        output.value = command;
-        this.updateStatus('Command built successfully');
-    }
-
-    copyCommand(category) {
-        const output = document.getElementById(`${category}-output`);
-        const command = output.value.trim();
-        
-        if (!command) {
-            this.showToast('No command to copy', 'warning');
-            return;
-        }
-        
-        navigator.clipboard.writeText(command).then(() => {
-            this.showToast('Command copied to clipboard!', 'success');
-            this.updateStatus('Command copied to clipboard');
-        }).catch(err => {
-            console.error('Failed to copy command:', err);
-            this.showToast('Failed to copy command', 'error');
-        });
-    }
-
-    executeCommand(category) {
-        const output = document.getElementById(`${category}-output`);
-        const command = output.value.trim();
-        
-        if (!command) {
-            this.showToast('No command to execute', 'warning');
-            return;
-        }
-        
-        // Copy command to clipboard first
-        this.copyCommand(category);
-        
-        if (category === 'gam') {
-            // Open Google Cloud Shell for GAM commands
-            window.open('https://shell.cloud.google.com/', '_blank');
-            this.showToast('Opening Google Cloud Shell... Command copied to clipboard!', 'success');
-            this.updateStatus('Opened Google Cloud Shell');
-        } else {
-            // For AD and PowerShell commands, just copy and inform user
-            this.showToast(`${category.toUpperCase()} command copied to clipboard! Execute in your terminal.`, 'success');
-            this.updateStatus(`${category.toUpperCase()} command ready for execution`);
-        }
-    }
-
-    // UI Helpers
-    showToast(message, type = 'info') {
-        const container = document.getElementById('toast-container');
-        const toast = document.createElement('div');
-        toast.className = `toast ${type}`;
-        toast.textContent = message;
-        
-        container.appendChild(toast);
-        
-        // Auto-remove after 4 seconds
-        setTimeout(() => {
-            toast.style.animation = 'slideOut 0.3s ease forwards';
-            setTimeout(() => {
-                if (container.contains(toast)) {
-                    container.removeChild(toast);
-                }
-            }, 300);
-        }, 4000);
-    }
-
-    updateStatus(message) {
-        document.getElementById('status-text').textContent = message;
-    }
-
-    // Export/Import functionality
-    exportCommands() {
-        const dataStr = JSON.stringify(this.commands, null, 2);
-        const dataBlob = new Blob([dataStr], { type: 'application/json' });
-        const url = URL.createObjectURL(dataBlob);
-        
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = 'gam-command-bank-export.json';
-        link.click();
-        
-        URL.revokeObjectURL(url);
-        this.showToast('Commands exported successfully!', 'success');
-    }
-
-    importCommands(file) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            try {
-                const importedCommands = JSON.parse(e.target.result);
-                this.commands = importedCommands;
-                this.saveCommands();
-                this.populateCommandSelects();
-                this.showToast('Commands imported successfully!', 'success');
-            } catch (error) {
-                console.error('Import error:', error);
-                this.showToast('Error importing commands. Please check the file format.', 'error');
-            }
-        };
-        reader.readAsText(file);
+    // ── Status ─────────────────────────────────────────────────────────────
+    setStatus(text, ms = 4000) {
+        const el = document.getElementById('status-text');
+        el.textContent = text;
+        clearTimeout(this._statusTimer);
+        this._statusTimer = setTimeout(() => { el.textContent = '● Ready'; }, ms);
     }
 }
 
-// Global functions for HTML onclick handlers
-function addCommand(category) {
-    app.addCommand(category);
-}
-
-function removeCommand(category) {
-    app.removeCommand(category);
-}
-
-function updateCommandDisplay(category) {
-    app.updateCommandDisplay(category);
-}
-
-function buildCommand(category) {
-    app.buildCommand(category);
-}
-
-function copyCommand(category) {
-    app.copyCommand(category);
-}
-
-function executeCommand(category) {
-    app.executeCommand(category);
-}
-
-// Add slideOut animation to CSS
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes slideOut {
-        from {
-            transform: translateX(0);
-            opacity: 1;
-        }
-        to {
-            transform: translateX(100%);
-            opacity: 0;
-        }
-    }
-`;
-document.head.appendChild(style);
-
-// Initialize the application when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     window.app = new CommandBankApp();
+
+    try {
+        new CalmingStarfield({
+            container: '#starfield-background',
+            starCount: 150,
+            driftSensitivity: 0.3,
+            colors: ['#2F81F7', '#58A6FF', '#FFFFFF', '#8B949E', '#E3B341'],
+            reducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        });
+    } catch {}
 });
