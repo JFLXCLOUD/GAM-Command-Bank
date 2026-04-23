@@ -2,9 +2,6 @@
 build/
 dist/
 
-# PyInstaller
-*.spec
-
 # Python cache
 __pycache__/
 *.pyc

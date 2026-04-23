@@ -106,8 +106,12 @@ class CommandManager:
         self.root.configure(bg=self.C["bg"])
 
         try:
-            if os.path.exists("icon.ico"):
-                self.root.iconbitmap("icon.ico")
+            if getattr(sys, "frozen", False):
+                icon_path = os.path.join(sys._MEIPASS, "icon.ico")
+            else:
+                icon_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "icon.ico")
+            if os.path.exists(icon_path):
+                self.root.iconbitmap(icon_path)
         except Exception:
             pass
 
