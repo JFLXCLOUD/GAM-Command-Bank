@@ -1,0 +1,3763 @@
+{
+    "GAM": [
+        {
+            "command": "gam group <group> members",
+            "description": "List members of a group",
+            "last_used": "2026-04-21T21:32:47.547868",
+            "use_count": 2,
+            "category": "GAM"
+        },
+        {
+            "command": "gam user <user> suspended on",
+            "description": "Suspend a user",
+            "last_used": "2026-04-21T22:13:44.150572",
+            "use_count": 7,
+            "category": "GAM",
+            "copied_at": "2026-04-21T22:04:53.419555"
+        },
+        {
+            "command": "gam user <user> unsuspended",
+            "description": "Unsuspend a user",
+            "last_used": "2026-04-21T21:18:30.956197",
+            "use_count": 1,
+            "category": "GAM"
+        },
+        {
+            "command": "gam user <user> change password newpassword <newpassword>",
+            "description": "Change a user's password",
+            "last_used": "2026-04-21T21:32:43.108893",
+            "use_count": 3,
+            "category": "GAM",
+            "favorite": true
+        },
+        {
+            "command": "gam create group <group>",
+            "description": "Create a new group"
+        },
+        {
+            "command": "gam delete group <group>",
+            "description": "Delete a group",
+            "last_used": "2026-04-21T22:06:41.642048",
+            "use_count": 6,
+            "category": "GAM"
+        },
+        {
+            "command": "gam user <user> add group <group>",
+            "description": "Add a user to a group"
+        },
+        {
+            "command": "gam user <user> remove group <group>",
+            "description": "Remove a user from a group",
+            "last_used": "2026-04-21T21:33:22.873906",
+            "use_count": 2,
+            "category": "GAM"
+        },
+        {
+            "command": "gam info domain",
+            "description": "Show domain information"
+        },
+        {
+            "command": "gam user <user> delegate adminrole",
+            "description": "Delegate admin role to a user",
+            "last_used": "2026-04-21T21:32:19.730214",
+            "use_count": 7,
+            "category": "GAM"
+        },
+        {
+            "command": "gam print delegations",
+            "description": "Show current delegations"
+        },
+        {
+            "command": "gam user <shared_user> delegate to <user>",
+            "description": "*Delegate Access to User's Account",
+            "last_used": "2026-04-21T21:31:48.118475",
+            "use_count": 1,
+            "category": "GAM"
+        },
+        {
+            "command": "gam user <shared_user> delete delegate <user>",
+            "description": "Delete Delegate User from Account"
+        },
+        {
+            "command": "gam user <User> print delegates",
+            "description": "View Delegates for an Account"
+        },
+        {
+            "command": "gam all users delete messages query \"rfc822msgid:<message ID>\" doit",
+            "description": "Delete An Email from All Users (Internally)"
+        },
+        {
+            "command": "gam user <User Email Address> vacation on subject \"<Subject Line Text>\" message \"<Message In The Email Body>\" html start 2000-01-01 end 2999-01-01",
+            "description": "Set OOO Message",
+            "last_used": "2026-04-21T22:13:44.480610",
+            "use_count": 13,
+            "category": "GAM"
+        },
+        {
+            "command": "gam user <File Owner Email> add drivefileacl <File ID> user <New Editor Email> role editor",
+            "description": "Add Editor to Drive File",
+            "last_used": "2026-04-21T22:13:48.744511",
+            "use_count": 3,
+            "category": "GAM"
+        },
+        {
+            "command": "gam info user <Email Address>",
+            "description": "Show User Info"
+        },
+        {
+            "command": "gam create user <email> firstname <first> lastname <last> password <password>",
+            "description": "Users › Create user",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam delete user <email>",
+            "description": "Users › Delete user",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam undelete user <email>",
+            "description": "Users › Undelete user",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam info user <email>",
+            "description": "Users › User info",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam print users",
+            "description": "Users › Print all users",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam print users query \"orgUnitPath=<ou_path>\"",
+            "description": "Users › Print users in OU",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam update user <email> suspended true",
+            "description": "Users › Suspend user",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam update user <email> suspended false",
+            "description": "Users › Unsuspend user",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam update user <email> password <new_password>",
+            "description": "Users › Change password",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam update user <email> changepassword true",
+            "description": "Users › Force password change on next login",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> signout",
+            "description": "Users › Sign out from all devices",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam update user <email> org <ou_path>",
+            "description": "Users › Move user to OU",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam update user <email> recoveryemail <recovery_email>",
+            "description": "Users › Set recovery email",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam create user <email> firstname <first> lastname <last> password <password> notify <notify_email>",
+            "description": "Users › Create user and notify by email",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam print users query \"isAdmin=true\"",
+            "description": "Users › Print all admins",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam print users query \"isSuspended=true\"",
+            "description": "Users › Print all suspended users",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> deprovision",
+            "description": "Users › Deprovision user",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam create alias <alias_email> user <user_email>",
+            "description": "Aliases › Create user alias",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam delete alias <alias_email>",
+            "description": "Aliases › Delete alias",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> print aliases",
+            "description": "Aliases › Print user aliases",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam create group <group_email> name <group_name>",
+            "description": "Groups › Create group",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam delete group <group_email>",
+            "description": "Groups › Delete group",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam info group <group_email>",
+            "description": "Groups › Group info",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam print groups",
+            "description": "Groups › Print all groups",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam update group <group_email> add member <user_email>",
+            "description": "Groups › Add member to group",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam update group <group_email> remove member <user_email>",
+            "description": "Groups › Remove member from group",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam print group-members group <group_email>",
+            "description": "Groups › Print group members",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam print groups member <user_email>",
+            "description": "Groups › Groups a user belongs to",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam update group <group_email> add manager <user_email>",
+            "description": "Groups › Promote user to manager",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam create org \"<ou_name>\" description \"<description>\" parent \"<parent_ou>\"",
+            "description": "Org Units › Create OU",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam delete org \"<ou_path>\"",
+            "description": "Org Units › Delete OU",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam print orgs",
+            "description": "Org Units › Print all OUs",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> show filecounts",
+            "description": "Drive › Show file counts",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> print filelist",
+            "description": "Drive › Print file list",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <source_email> transfer drive <dest_email>",
+            "description": "Drive › Transfer all drive files to another user",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> empty drivetrash",
+            "description": "Drive › Empty Drive trash",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> print filetree",
+            "description": "Drive › Print file tree",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> print messages query \"<search_query>\"",
+            "description": "Gmail › Search messages",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> delete messages query \"<search_query>\" doit",
+            "description": "Gmail › Delete messages by query",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> vacation on subject \"<subject>\" message \"<message>\"",
+            "description": "Gmail › Enable vacation responder",
+            "category": "GAM",
+            "favorite": true,
+            "last_used": "2026-04-21T21:58:03.092734",
+            "use_count": 2
+        },
+        {
+            "command": "gam user <email> vacation off",
+            "description": "Gmail › Disable vacation responder",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> add delegate <delegate_email>",
+            "description": "Gmail › Add delegate",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": "2026-04-21T21:59:40.717099",
+            "use_count": 1
+        },
+        {
+            "command": "gam user <email> show delegates",
+            "description": "Gmail › Show delegates",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> delete delegate <delegate_email>",
+            "description": "Gmail › Remove delegate",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> imap on",
+            "description": "Gmail › Enable IMAP",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> imap off",
+            "description": "Gmail › Disable IMAP",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> show calendars",
+            "description": "Calendar › Show calendars",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": "2026-04-21T21:32:42.748110",
+            "use_count": 3
+        },
+        {
+            "command": "gam user <email> add calendars <calendar_id> selected true",
+            "description": "Calendar › Add calendar to user",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": "2026-04-21T21:32:37.362601",
+            "use_count": 1
+        },
+        {
+            "command": "gam print licenses",
+            "description": "Licenses › Print all licenses",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> add license <sku_id>",
+            "description": "Licenses › Assign license to user",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> delete license <sku_id>",
+            "description": "Licenses › Remove license from user",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam report users",
+            "description": "Reports › User activity report",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam report drive user <email>",
+            "description": "Reports › Drive activity for user",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam report login",
+            "description": "Reports › Login activity report",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam create adminrole <role_name> privileges <privilege1,privilege2>",
+            "description": "Admin › Create admin role",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam delete adminrole <role_id>",
+            "description": "Admin › Delete admin role",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> create admin <role_name>",
+            "description": "Admin › Assign admin role to user",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> delete admin <role_name>",
+            "description": "Admin › Revoke admin role from user",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam print adminroles",
+            "description": "Admin › Print all admin roles",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam print admins",
+            "description": "Admin › Print all admins with roles",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam ou <org_unit> print users fields name,primaryemail,isEnrolledIn2Sv",
+            "description": "Users 2SV › Find users without 2SV enabled",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> update user turnoff2svafterenrollment true",
+            "description": "Users 2SV › Turn off 2SV for user",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> show isenrolledin2sv",
+            "description": "Users 2SV › Verify 2SV enrollment for user",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam ou_and_children <org_unit> print users fields email,isEnrolledIn2Sv,isEnforcedIn2Sv",
+            "description": "Users 2SV › Print users with 2SV off in OU",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> show backupcodes",
+            "description": "Users Backup › Show backup codes",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> update backupcodes",
+            "description": "Users Backup › Generate new backup codes",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> delete backupcodes",
+            "description": "Users Backup › Delete all backup codes",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> update user firstname <first_name> lastname <last_name>",
+            "description": "Users › Update first and last name",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> update user name <display_name>",
+            "description": "Users › Update display name",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> update user recoveryphone <phone_number>",
+            "description": "Users › Set recovery phone",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> update user org <org_unit>",
+            "description": "Users › Update org unit (move user)",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> update user <schema_name>.<field_name> <value>",
+            "description": "Users › Update custom attribute",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> add alias <alias_email>",
+            "description": "Users › Add alternate email (alias)",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> delete alias <alias_email>",
+            "description": "Users › Remove alternate email (alias)",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <old_email> update user primaryemail <new_email>",
+            "description": "Users › Rename / change primary email",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> update user changepassword true",
+            "description": "Users › Set change-password-at-next-login",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> update user changepassword false",
+            "description": "Users › Clear change-password-at-next-login",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam print users allfields",
+            "description": "Users › Print all users with custom fields",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam ou_and_children <org_unit> print users fields primaryemail,name,suspended",
+            "description": "Users › Print users in OU and sub-OUs",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam print users query \"createdTime>=<YYYY-MM-DD>\"",
+            "description": "Users › Print users created within X days",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam print users fields primaryemail,name,lastlogintime",
+            "description": "Users › Print last login time for all users",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam ou <org_unit> print users fields primaryemail,lastlogintime",
+            "description": "Users › Print last login time for OU",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam print users query \"lastlogintime=1970-01-01T00:00:00.000Z\" fields email,name",
+            "description": "Users › Print users who never logged in",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam print users fields primaryemail,name,orgunitpath",
+            "description": "Users › Print all users in domain",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam print users domain <domain> fields primaryemail,name",
+            "description": "Users › Print users in specific domain",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam print users fields primaryemail,recoveryemail",
+            "description": "Users › Print recovery email for all users",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam print users query \"isSuspended=True\" fields primaryemail,name",
+            "description": "Users › Print users with suspended=true",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> info",
+            "description": "Users › Print user info (single user)",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam print orgs",
+            "description": "Users › Print org tree with user count",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam undelete user <user_id> org <org_unit>",
+            "description": "Users › Undelete user by ID",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> update user gal off",
+            "description": "Users › Remove user from GAL",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> update user gal on",
+            "description": "Users › Add user back to GAL",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> deprovision",
+            "description": "Users › Deprovision (wipe, sign out, remove tokens)",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam csv <file.csv> gam update user ~primaryEmail firstname ~FirstName lastname ~LastName",
+            "description": "Users › Update user from CSV file",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam csv <file.csv> gam create group ~Email name ~Name",
+            "description": "Groups › Create group in bulk from CSV",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam group <group_email> add alias <alias_email>",
+            "description": "Groups › Add group alias",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam group <group_email> delete alias <alias_email>",
+            "description": "Groups › Delete group alias",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam update group <group_email> add manager user <user_email>",
+            "description": "Groups › Add manager to group",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam update group <group_email> add owner user <user_email>",
+            "description": "Groups › Add owner to group",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam update group <group_email> remove owner user <user_email>",
+            "description": "Groups › Remove owner from group",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam print groups fields email,memberscount,externalmembers",
+            "description": "Groups › Print groups with external members",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> print groups isowner",
+            "description": "Groups › Print groups where user is owner",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam print group-members group <group_email> recursive",
+            "description": "Groups › Print nested group members",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam print group-members fields email,status query \"isSuspended=True\"",
+            "description": "Groups › Print all suspended users in groups",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam update group <group_email> who_can_post_message <ALL_MEMBERS_CAN_POST|ALL_IN_DOMAIN_CAN_POST>",
+            "description": "Groups › Update who can post to group",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam update group <group_email> who_can_view_membership <ALL_MEMBERS_CAN_VIEW|ALL_IN_DOMAIN_CAN_VIEW>",
+            "description": "Groups › Update who can view membership",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam update group <group_email> include_in_global_address_list false",
+            "description": "Groups › Hide group from Gmail directory",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam update group <group_email> show_in_group_directory false",
+            "description": "Groups › Turn off directory sharing",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam update group <group_email> spam_moderation_level <MODERATE|ALLOW|SILENTLY_BLOCK>",
+            "description": "Groups › Set spam moderation level",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam info group <group_email> allfields",
+            "description": "Groups › Print group info (all fields)",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam print groups query <partial_name>",
+            "description": "Groups › Search groups by partial name",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam print groups matchsetting enableCollaborativeInbox true",
+            "description": "Groups › Print groups that have collaborative inbox",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam print groups fields email,memberscount totalcount",
+            "description": "Groups › Print total member count for all groups",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam csv <file.csv> gam update group <group_email> remove member ~email",
+            "description": "Groups › Delete members from group via CSV",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> print contacts",
+            "description": "Contacts › Print all contacts for user",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam ou <org_unit> print contacts",
+            "description": "Contacts › Print contacts for OU",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> create contact firstname <first> lastname <last> email work <contact_email>",
+            "description": "Contacts › Create contact for user",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> delete contact <contact_id>",
+            "description": "Contacts › Delete contact by ID",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> update contact <contact_id> firstname <first> lastname <last>",
+            "description": "Contacts › Update contact name",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> replacedomain contacts <old_domain> <new_domain>",
+            "description": "Contacts › Replace domain in contacts",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> create contactdelegate <delegate_email>",
+            "description": "Contacts › Add contact delegate",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> delete contactdelegate <delegate_email>",
+            "description": "Contacts › Delete contact delegate",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> print othercontacts",
+            "description": "Contacts › Print other contacts (directory)",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> print contactgroups",
+            "description": "Contacts › View all contact groups",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> create contactgroup <group_name>",
+            "description": "Contacts › Create contact group",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> delete contactgroup <group_name>",
+            "description": "Contacts › Delete contact group",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> print calsettings",
+            "description": "Calendar › Print user calendar settings",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> print calendaracls",
+            "description": "Calendar › Print calendar ACLs for user",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> add calendaracl calendar <calendar_id> role <reader|writer|owner> user <share_with>",
+            "description": "Calendar › Add calendar ACL (share)",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> delete calendaracl calendar <calendar_id> user <share_with>",
+            "description": "Calendar › Delete calendar ACL",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> print calendars noprimary nosystem",
+            "description": "Calendar › Print all calendars for user",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> print events",
+            "description": "Calendar › Print events for user",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> print events start <YYYY-MM-DD> end <YYYY-MM-DD>",
+            "description": "Calendar › Print events in date range",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> delete calendar <calendar_id>",
+            "description": "Calendar › Delete single calendar for user",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <from_email> transfer calendar <to_email>",
+            "description": "Calendar › Transfer all events to another user",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> wipe calendar",
+            "description": "Calendar › Wipe all calendars for user",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> update event <event_id> visibility private",
+            "description": "Calendar › Update event visibility to private",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> update event <event_id> addconferencedataentry",
+            "description": "Calendar › Add Meet link to event",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam csv <file.csv> gam user ~Owner create event calendar ~CalendarID summary ~Summary start ~Start end ~End",
+            "description": "Calendar › Create recurring event from Sheet",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> print filelist fields id,name,mimeType,owners",
+            "description": "Drive › Print file list for user",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> print filetree",
+            "description": "Drive › Print file tree for user",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> print filecounts",
+            "description": "Drive › Print file counts for user",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> print diskusage",
+            "description": "Drive › Print disk usage for user",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> print filelist query \"mimeType='<mime_type>'\" fields id,name",
+            "description": "Drive › Print files by MIME type",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> print drivefileacls <file_id>",
+            "description": "Drive › Print all file permissions",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> print filerevisions <file_id>",
+            "description": "Drive › Print file revisions",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> info drivefile <file_id>",
+            "description": "Drive › Get file info",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> show filepath <file_id>",
+            "description": "Drive › Get file path",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> add drivefileacl <file_id> user <share_email> role writer",
+            "description": "Drive › Add editor to file",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> add drivefileacl <file_id> user <share_email> role reader",
+            "description": "Drive › Add viewer to file",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> add drivefileacl <file_id> domain <domain> role reader",
+            "description": "Drive › Share file with anyone in domain (view)",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> delete drivefileacl <file_id> <permission_id>",
+            "description": "Drive › Remove permission from file",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> delete drivefile <file_id>",
+            "description": "Drive › Delete file",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> move drivefile <file_id> parentid <folder_id>",
+            "description": "Drive › Move file to folder",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> copy drivefile <file_id> newfilename <new_name>",
+            "description": "Drive › Copy file",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <from_email> copy drivefile <folder_id> newfilename <name> user <to_email>",
+            "description": "Drive › Copy folder structure to another user",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> get drivefile <file_id> format pdf targetfolder <local_path>",
+            "description": "Drive › Download file as PDF",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> get drivefile <file_id> targetfolder <local_path>",
+            "description": "Drive › Download file (original format)",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <new_owner> add drivefileacl <file_id> user <new_owner> role owner",
+            "description": "Drive › Claim ownership of file",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <from_email> transfer drive <to_email> keepuser",
+            "description": "Drive › Transfer drive folder to new user",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> update drivefile <file_id> untrash",
+            "description": "Drive › Untrash single file",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam ou <org_unit> empty drivetrash",
+            "description": "Drive › Empty Drive trash for OU",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> delete drivefile query \"<query>\"",
+            "description": "Drive › Purge files matching query",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> print filelist query \"starred=true\" fields id,name",
+            "description": "Drive › Print starred files",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> print filelist query \"not 'root' in parents and not trashed\" fields id,name,parents",
+            "description": "Drive › Print orphan files (no parent)",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> show drivesettings",
+            "description": "Drive › Check drive settings",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam print teamdrives",
+            "description": "Shared Drive › List all shared drives",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> create teamdrive <drive_name>",
+            "description": "Shared Drive › Create shared drive",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": "2026-04-21T22:14:07.231951",
+            "use_count": 1
+        },
+        {
+            "command": "gam delete teamdrive <drive_id>",
+            "description": "Shared Drive › Delete shared drive",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> add teamdrive <drive_id> user <member_email> role <writer|commenter|reader|organizer>",
+            "description": "Shared Drive › Add member to shared drive",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> delete teamdrive <drive_id> user <member_email>",
+            "description": "Shared Drive › Remove member from shared drive",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam print teamdriveacls teamdrive <drive_id>",
+            "description": "Shared Drive › Print members of shared drive",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> print filelist teamdriveid <drive_id> fields id,name,mimeType",
+            "description": "Shared Drive › Print all files in shared drive",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <old_owner> update teamdrive <drive_id> organizer <new_owner>",
+            "description": "Shared Drive › Transfer ownership on shared drive",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> print sendas",
+            "description": "Gmail › Print all send-as addresses",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> create sendas <sendas_email> name <display_name>",
+            "description": "Gmail › Add send-as address",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> delete sendas <sendas_email>",
+            "description": "Gmail › Delete send-as address",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> print filters",
+            "description": "Gmail › Print filters for user",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> create label <label_name>",
+            "description": "Gmail › Create label",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> print labels",
+            "description": "Gmail › Print all labels",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> delete label <label_name>",
+            "description": "Gmail › Delete label",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> pop on for allmail",
+            "description": "Gmail › Enable POP for user",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> pop off",
+            "description": "Gmail › Disable POP for user",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> modify messages query \"<query>\" addlabel <label_name>",
+            "description": "Gmail › Modify messages – add label",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> modify messages query \"<query>\" removelabel <label_name>",
+            "description": "Gmail › Modify messages – remove label",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> trash messages query \"<query>\"",
+            "description": "Gmail › Trash messages by query",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> print forwardingaddresses",
+            "description": "Gmail › Print forwarding addresses",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> show vacation",
+            "description": "Gmail › Show vacation responder settings",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> signature file <signature.html> html",
+            "description": "Gmail › Set email signature",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam report admin start <YYYY-MM-DD>",
+            "description": "Reports › Admin activity report",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam report login user <email> start <YYYY-MM-DD>",
+            "description": "Reports › Login activity for specific user",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam ou <org_unit> report drive start <YYYY-MM-DD>",
+            "description": "Reports › Drive activity for OU",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam report token",
+            "description": "Reports › Token activity report",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam report users",
+            "description": "Reports › Print usage report for all users",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam report customer",
+            "description": "Reports › Print customer usage (domain-wide)",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam report mobile",
+            "description": "Reports › Mobile audit report",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam report groups start <YYYY-MM-DD>",
+            "description": "Reports › Groups activity report",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam report meet start <YYYY-MM-DD>",
+            "description": "Reports › Meet activity report",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam report chat start <YYYY-MM-DD>",
+            "description": "Reports › Chat activity report",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam report classroom start <YYYY-MM-DD>",
+            "description": "Reports › Classroom activity report",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> print tokens",
+            "description": "Tokens › Print all OAuth tokens for user",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> delete tokens",
+            "description": "Tokens › Delete all tokens for user",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> delete token clientid <client_id>",
+            "description": "Tokens › Delete specific app token",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam all users print tokens",
+            "description": "Tokens › Print tokens for all users",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam ou <org_unit> print tokens",
+            "description": "Tokens › Print tokens for OU",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam print orgs allfields",
+            "description": "Org Units › Print all OUs with user count",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> update user org <org_unit>",
+            "description": "Org Units › Move user to OU",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam csv <file.csv> gam user ~email update user org <org_unit>",
+            "description": "Org Units › Move users in OU via CSV",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam update org <org_unit> name <new_name>",
+            "description": "Org Units › Rename OU",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam update org <org_unit> description <description>",
+            "description": "Org Units › Update OU description",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam print orgtree",
+            "description": "Org Units › Print OU tree",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam info org <org_unit>",
+            "description": "Org Units › Get OU info",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam print licenses",
+            "description": "Licenses › Print all licenses in domain",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam print licenses skuid <sku_id>",
+            "description": "Licenses › Print licenses for specific SKU",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam csv <file.csv> gam user ~email add license <sku_id>",
+            "description": "Licenses › Assign licenses in bulk from CSV",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam print users query \"includeInGlobalAddressList=False\" fields primaryemail,name",
+            "description": "GAL › Print all GAL exclusions",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> update user gal off",
+            "description": "GAL › Remove user from GAL",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> update user gal on",
+            "description": "GAL › Add user back to GAL",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam ou <org_unit> update user gal off",
+            "description": "GAL › Remove all OU users from GAL",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> delete photo",
+            "description": "Photos › Delete profile photo",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> update photo <local_photo_path>",
+            "description": "Photos › Upload profile photo from file",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> get photo targetfolder <local_path>",
+            "description": "Photos › Download profile photo",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam ou <org_unit> delete photo",
+            "description": "Photos › Delete photos for all users in OU",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> print chatspaces",
+            "description": "Chat › Print Chat spaces for user",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> print chatmembers space <space_id>",
+            "description": "Chat › Print Chat members of a space",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> print chatmessages space <space_id>",
+            "description": "Chat › Print Chat messages in space",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> delete chatmessage name <message_name>",
+            "description": "Chat › Delete Chat message",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam print courses",
+            "description": "Classroom › Print all courses",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> print courses teacherID <email>",
+            "description": "Classroom › Print courses for teacher",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> print courses studentID <email>",
+            "description": "Classroom › Print courses for student",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam course <course_id> add student <student_email>",
+            "description": "Classroom › Add student to course",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam course <course_id> add teacher <teacher_email>",
+            "description": "Classroom › Add teacher to course",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam course <course_id> remove student <student_email>",
+            "description": "Classroom › Remove student from course",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> create course name <course_name> section <section> state ACTIVE",
+            "description": "Classroom › Create course",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam course <course_id> update state ARCHIVED",
+            "description": "Classroom › Archive course",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam print course-participants course <course_id>",
+            "description": "Classroom › Print course members",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam report meet start <YYYY-MM-DD>",
+            "description": "Meet › Print Meet activity report",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam report meet user <email> start <YYYY-MM-DD>",
+            "description": "Meet › Get Meet usage for user",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam info domain",
+            "description": "Customer › Show domain info",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam info customer",
+            "description": "Customer › Show customer info",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam print domains",
+            "description": "Customer › Print all domains",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam print domainaliases",
+            "description": "Customer › Print all domain aliases",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam print mobile",
+            "description": "Mobile › Print all mobile devices",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam user <email> print mobile",
+            "description": "Mobile › Print mobile devices for user",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam mobile <resource_id> action wipe",
+            "description": "Mobile › Wipe mobile device",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam mobile <resource_id> action account_wipe",
+            "description": "Mobile › Remote wipe mobile device",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam delete mobile <resource_id>",
+            "description": "Mobile › Delete mobile device record",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam create cigroup <group_email> name <group_name> security",
+            "description": "Groups CI › Create security group",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam update cigroup <group_email> add member <user_email>",
+            "description": "Groups CI › Add member to CI group",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam update cigroup <group_email> remove member <user_email>",
+            "description": "Groups CI › Remove member from CI group",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam print cigroups",
+            "description": "Groups CI › Print Cloud Identity groups",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "gam print cigroup-members group <group_email>",
+            "description": "Groups CI › Print CI group members",
+            "category": "GAM",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        }
+    ],
+    "AD": [
+        {
+            "command": "Get-ADUser -Identity <user>",
+            "description": "Get a specific user",
+            "last_used": "2026-04-21T22:13:44.155588",
+            "use_count": 7,
+            "category": "AD"
+        },
+        {
+            "command": "Get-ADGroup -Identity <group>",
+            "description": "Get a specific group",
+            "last_used": "2026-04-21T21:32:47.554373",
+            "use_count": 2,
+            "category": "AD"
+        },
+        {
+            "command": "Disable-ADAccount -Identity <user>",
+            "description": "Disable a user account"
+        },
+        {
+            "command": "Enable-ADAccount -Identity <user>",
+            "description": "Enable a user account"
+        },
+        {
+            "command": "Set-ADUser -Identity <user> -Password <securepassword>",
+            "description": "Set a user's password (use SecureString)"
+        },
+        {
+            "command": "New-ADGroup -Name <group> -GroupCategory Security -GroupScope Global",
+            "description": "Create a new security group",
+            "last_used": "2026-04-21T21:32:42.925458",
+            "use_count": 2,
+            "category": "AD"
+        },
+        {
+            "command": "Remove-ADGroup -Identity <group>",
+            "description": "Delete a group",
+            "last_used": "2026-04-21T21:33:22.881462",
+            "use_count": 6,
+            "category": "AD"
+        },
+        {
+            "command": "Add-ADGroupMember -Identity <group> -Members <user>",
+            "description": "Add a user to a group"
+        },
+        {
+            "command": "Remove-ADGroupMember -Identity <group> -Members <user>",
+            "description": "Remove a user from a group"
+        },
+        {
+            "command": "Get-ADDomain",
+            "description": "Get domain information"
+        },
+        {
+            "command": "Get-ADUser -Identity <username> -Properties *",
+            "description": "Users › Get user by identity",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-ADUser -Filter {DisplayName -like '<*search*>'} -Properties DisplayName,EmailAddress",
+            "description": "Users › Search users by display name",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-ADUser -Filter {EmailAddress -eq '<email>'} -Properties *",
+            "description": "Users › Search users by email",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-ADUser -Filter * -SearchBase '<OU=...,DC=domain,DC=com>' -Properties DisplayName,Enabled",
+            "description": "Users › Get all users in OU",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-ADUser -Filter {Enabled -eq $false} -Properties DisplayName,EmailAddress | Select Name,EmailAddress",
+            "description": "Users › Get all disabled users",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-ADUser -Filter {LastLogonDate -notlike '*'} -Properties LastLogonDate | Select Name,LastLogonDate",
+            "description": "Users › Get users who never logged in",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-ADUser -Filter {LastLogonDate -lt (Get-Date).AddDays(-<days>)} -Properties LastLogonDate | Select Name,LastLogonDate",
+            "description": "Users › Get users not logged in for X days",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-ADUser -Filter {PasswordNeverExpires -eq $false} -Properties PasswordLastSet,PasswordNeverExpires | Select Name,PasswordLastSet",
+            "description": "Users › Get users with expiring passwords",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-ADUser -Filter {PasswordNeverExpires -eq $true} | Select Name,SamAccountName",
+            "description": "Users › Get users with password never expires",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Search-ADAccount -LockedOut | Select Name,SamAccountName,LockedOut",
+            "description": "Users › Get locked out users",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Unlock-ADAccount -Identity <username>",
+            "description": "Users › Unlock user account",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Search-ADAccount -LockedOut | Unlock-ADAccount",
+            "description": "Users › Unlock all locked accounts",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-ADUser -Identity <username> -Properties LockedOut,BadLogonCount,BadPwdCount | Select Name,LockedOut,BadLogonCount",
+            "description": "Users › Get account lockout status",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "New-ADUser -Name '<Display Name>' -GivenName '<First>' -Surname '<Last>' -SamAccountName '<username>' -UserPrincipalName '<email>' -Path '<OU=Users,DC=domain,DC=com>' -AccountPassword (ConvertTo-SecureString '<password>' -AsPlainText -Force) -Enabled $true",
+            "description": "Users › Create new AD user",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Set-ADUser -Identity <username> -DisplayName '<Display Name>'",
+            "description": "Users › Set user display name",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Set-ADUser -Identity <username> -EmailAddress '<email>'",
+            "description": "Users › Set user email address",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Set-ADUser -Identity <username> -OfficePhone '<phone>'",
+            "description": "Users › Set user phone number",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Set-ADUser -Identity <username> -Title '<title>' -Department '<department>'",
+            "description": "Users › Set user title and department",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Set-ADUser -Identity <username> -Manager '<manager_username>'",
+            "description": "Users › Set user manager",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Set-ADUser -Identity <username> -Description '<description>'",
+            "description": "Users › Set user description",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Move-ADObject -Identity (Get-ADUser <username>).DistinguishedName -TargetPath '<OU=NewOU,DC=domain,DC=com>'",
+            "description": "Users › Move user to different OU",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Remove-ADUser -Identity <username> -Confirm:$false",
+            "description": "Users › Delete AD user",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Set-ADUser -Identity <username> -ChangePasswordAtLogon $true",
+            "description": "Users › Force password reset at next login",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Set-ADUser -Identity <username> -PasswordNeverExpires $true",
+            "description": "Users › Set password and never expire",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Set-ADAccountPassword -Identity <username> -NewPassword (ConvertTo-SecureString '<new_password>' -AsPlainText -Force) -Reset",
+            "description": "Users › Reset user password",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-ADUser -Filter * -Properties DisplayName,EmailAddress,Department,Title,Enabled | Export-Csv -Path '<output.csv>' -NoTypeInformation",
+            "description": "Users › Export all users to CSV",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-ADUser -Filter * -SearchBase '<OU=...,DC=domain,DC=com>' -Properties * | Export-Csv '<output.csv>' -NoTypeInformation",
+            "description": "Users › Export users in OU to CSV",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Import-Csv '<users.csv>' | ForEach-Object { New-ADUser -Name $_.Name -SamAccountName $_.Username -UserPrincipalName $_.UPN -Enabled $true }",
+            "description": "Users › Bulk create users from CSV",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-ADGroup -Identity '<group>' -Properties *",
+            "description": "Groups › Get group info",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-ADGroup -Filter * -SearchBase '<OU=...,DC=domain,DC=com>'",
+            "description": "Groups › Get all groups in OU",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-ADPrincipalGroupMembership -Identity <username> | Select Name",
+            "description": "Groups › Get all groups user is member of",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-ADGroupMember -Identity '<group>' -Recursive | Select Name,SamAccountName",
+            "description": "Groups › Get nested group membership",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-ADGroupMember -Identity '<group>' | Select Name,SamAccountName,ObjectClass",
+            "description": "Groups › Get all group members",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "New-ADGroup -Name '<group>' -GroupCategory Distribution -GroupScope Universal -Path '<OU=Groups,DC=domain,DC=com>'",
+            "description": "Groups › Create distribution group",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "New-ADGroup -Name '<group>' -GroupCategory Security -GroupScope Global -Path '<OU=Groups,DC=domain,DC=com>'",
+            "description": "Groups › Create security group",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Import-Csv '<users.csv>' | ForEach-Object { Add-ADGroupMember -Identity '<group>' -Members $_.Username }",
+            "description": "Groups › Add multiple users to group from CSV",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-ADGroupMember -Identity '<group>' | ForEach-Object { Remove-ADGroupMember -Identity '<group>' -Members $_ -Confirm:$false }",
+            "description": "Groups › Remove all members from group",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-ADGroup -Filter {Name -like '<*search*>'} | Select Name,GroupCategory,GroupScope",
+            "description": "Groups › Search groups by name",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-ADGroupMember -Identity '<group>' -Recursive | Select Name,SamAccountName | Export-Csv '<output.csv>' -NoTypeInformation",
+            "description": "Groups › Export group members to CSV",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Set-ADGroup -Identity '<group>' -Description '<description>'",
+            "description": "Groups › Set group description",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-ADComputer -Identity <computer_name> -Properties *",
+            "description": "Computers › Get computer info",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-ADComputer -Filter * -SearchBase '<OU=...,DC=domain,DC=com>' -Properties LastLogonDate,OperatingSystem",
+            "description": "Computers › Get all computers in OU",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-ADComputer -Filter {LastLogonDate -lt (Get-Date).AddDays(-<days>)} -Properties LastLogonDate | Select Name,LastLogonDate",
+            "description": "Computers › Get stale computers (not logged in X days)",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Disable-ADAccount -Identity <computer_name>$",
+            "description": "Computers › Disable computer account",
+            "category": "AD",
+            "favorite": false,
+            "last_used": "2026-04-21T22:23:34.947044",
+            "use_count": 1
+        },
+        {
+            "command": "Remove-ADComputer -Identity <computer_name> -Confirm:$false",
+            "description": "Computers › Delete computer account",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Move-ADObject -Identity (Get-ADComputer <computer_name>).DistinguishedName -TargetPath '<OU=NewOU,DC=domain,DC=com>'",
+            "description": "Computers › Move computer to OU",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-ADComputer -Filter * -Properties Name,OperatingSystem,LastLogonDate,Enabled | Export-Csv '<output.csv>' -NoTypeInformation",
+            "description": "Computers › Export all computers to CSV",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-ADOrganizationalUnit -Filter * | Select Name,DistinguishedName",
+            "description": "OUs › Get all OUs",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "New-ADOrganizationalUnit -Name '<OU_Name>' -Path '<DC=domain,DC=com>'",
+            "description": "OUs › Create new OU",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Set-ADOrganizationalUnit -Identity '<OU=Name,DC=domain,DC=com>' -ProtectedFromAccidentalDeletion $false ; Remove-ADOrganizationalUnit -Identity '<OU=Name,DC=domain,DC=com>' -Confirm:$false",
+            "description": "OUs › Delete OU (remove protection first)",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-ADOrganizationalUnit -Identity '<OU=Name,DC=domain,DC=com>'",
+            "description": "OUs › Get OU by distinguished name",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-ADDomainController -Filter *",
+            "description": "Domain › Get all domain controllers",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-ADForest",
+            "description": "Domain › Get AD forest info",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-ADDefaultDomainPasswordPolicy",
+            "description": "Domain › Get default domain password policy",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "repadmin /syncall /AdeP",
+            "description": "Domain › Force AD replication",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "repadmin /replsummary",
+            "description": "Domain › Check replication status",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-ADReplicationFailure -Scope Domain",
+            "description": "Domain › Get AD replication failures",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Test-ComputerSecureChannel -Server <dc_name> -Verbose",
+            "description": "Domain › Test AD domain controller",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-GPO -All | Select DisplayName,GpoStatus,CreationTime",
+            "description": "GPO › Get all GPOs",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-GPO -Name '<gpo_name>'",
+            "description": "GPO › Get GPO by name",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "New-GPO -Name '<gpo_name>'",
+            "description": "GPO › Create new GPO",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "New-GPLink -Name '<gpo_name>' -Target '<OU=Name,DC=domain,DC=com>'",
+            "description": "GPO › Link GPO to OU",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Remove-GPLink -Name '<gpo_name>' -Target '<OU=Name,DC=domain,DC=com>'",
+            "description": "GPO › Unlink GPO from OU",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Invoke-GPUpdate -Computer <computer_name> -Force",
+            "description": "GPO › Force GPO update on remote computer",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-GPOReport -Name '<gpo_name>' -ReportType Html -Path '<output.html>'",
+            "description": "GPO › Generate GPO report (HTML)",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Backup-GPO -All -Path '<backup_folder>'",
+            "description": "GPO › Backup all GPOs",
+            "category": "AD",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        }
+    ],
+    "PowerShell": [
+        {
+            "command": "Get-Process",
+            "description": "List all running processes",
+            "last_used": "2026-04-21T21:32:47.557883",
+            "use_count": 4,
+            "category": "PowerShell"
+        },
+        {
+            "command": "Stop-Process -Id <process_id>",
+            "description": "Stop a process by its ID",
+            "last_used": "2026-04-21T22:13:44.160616",
+            "use_count": 3,
+            "category": "PowerShell"
+        },
+        {
+            "command": "Get-Service",
+            "description": "List all services",
+            "last_used": "2026-04-21T21:33:22.885460",
+            "use_count": 2,
+            "category": "PowerShell"
+        },
+        {
+            "command": "Start-Service -Name <service_name>",
+            "description": "Start a service"
+        },
+        {
+            "command": "Stop-Service -Name <service_name>",
+            "description": "Stop a service"
+        },
+        {
+            "command": "Get-Item <path>",
+            "description": "Get a file or folder",
+            "last_used": "2026-04-21T21:32:20.770659",
+            "use_count": 2,
+            "category": "PowerShell"
+        },
+        {
+            "command": "Set-Content -Path <path> -Value <content>",
+            "description": "Set the content of a file",
+            "last_used": "2026-04-21T21:33:22.697989",
+            "use_count": 2,
+            "category": "PowerShell"
+        },
+        {
+            "command": "New-Item -Path <path> -ItemType File",
+            "description": "Create a new file"
+        },
+        {
+            "command": "New-Item -Path <path> -ItemType Directory",
+            "description": "Create a new folder"
+        },
+        {
+            "command": "Remove-Item -Path <path>",
+            "description": "Delete a file or folder",
+            "last_used": "2026-04-21T21:32:20.579232",
+            "use_count": 4,
+            "category": "PowerShell"
+        },
+        {
+            "command": "Get-ChildItem -Path <path>",
+            "description": "Get the files and folders in a path"
+        },
+        {
+            "command": "Get-EventLog -LogName System -EntryType Error",
+            "description": "Get system error events"
+        },
+        {
+            "command": "Restart-Computer",
+            "description": "Restart the computer"
+        },
+        {
+            "command": "Get-Credential",
+            "description": "Get a user's credentials"
+        },
+        {
+            "command": "$PSVersionTable.PSVersion",
+            "description": "Show the current PowerShell version"
+        },
+        {
+            "command": "Copy-Item -Path '<source>' -Destination '<destination>' -Recurse",
+            "description": "Files › Copy file or folder",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Move-Item -Path '<source>' -Destination '<destination>'",
+            "description": "Files › Move file or folder",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Rename-Item -Path '<path>' -NewName '<new_name>'",
+            "description": "Files › Rename file or folder",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Remove-Item -Path '<path>' -Force",
+            "description": "Files › Delete file (force)",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Remove-Item -Path '<path>' -Recurse -Force",
+            "description": "Files › Delete folder recursively",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Test-Path '<path>'",
+            "description": "Files › Test if path exists",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-FileHash -Path '<path>' -Algorithm SHA256",
+            "description": "Files › Get file hash (SHA256)",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-Content -Path '<path>'",
+            "description": "Files › Get file content",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-Content -Path '<path>' -Tail <lines>",
+            "description": "Files › Get last N lines of file (tail)",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-ChildItem -Path '<folder>' -Recurse | Select-String -Pattern '<search_text>'",
+            "description": "Files › Search for text in files",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-Item '<path>' | Select Name,LastWriteTime,Length",
+            "description": "Files › Get file last write time",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-ChildItem -Path '<folder>' | Sort-Object Length -Descending | Select Name,Length",
+            "description": "Files › List files sorted by size",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "(Get-ChildItem -Path '<folder>' -Recurse | Measure-Object -Property Length -Sum).Sum / 1MB",
+            "description": "Files › Get folder size",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Compress-Archive -Path '<source>' -DestinationPath '<output.zip>'",
+            "description": "Files › Compress to ZIP",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Expand-Archive -Path '<archive.zip>' -DestinationPath '<destination>'",
+            "description": "Files › Extract ZIP",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "<variable> | Export-Csv -Path '<output.csv>' -NoTypeInformation",
+            "description": "Files › Export variable to CSV",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "$data = Import-Csv -Path '<file.csv>'",
+            "description": "Files › Import CSV",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Test-Connection -ComputerName <hostname_or_IP> -Count 4",
+            "description": "Network › Test network connection (ping)",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Test-NetConnection -ComputerName <hostname> -Port <port>",
+            "description": "Network › Test TCP port connectivity",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-NetAdapter | Select Name,Status,LinkSpeed,MacAddress",
+            "description": "Network › Get network adapters",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-NetIPAddress | Select InterfaceAlias,IPAddress,PrefixLength",
+            "description": "Network › Get IP configuration",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-DnsClientCache",
+            "description": "Network › Get DNS client cache",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Clear-DnsClientCache",
+            "description": "Network › Flush DNS cache",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": "2026-04-21T22:24:02.000305",
+            "use_count": 1
+        },
+        {
+            "command": "Resolve-DnsName -Name <hostname>",
+            "description": "Network › Resolve DNS hostname",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-NetTCPConnection -State Established | Select LocalAddress,LocalPort,RemoteAddress,RemotePort",
+            "description": "Network › Get all open TCP connections",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-NetFirewallRule | Where-Object {$_.Enabled -eq 'True'} | Select DisplayName,Direction,Action",
+            "description": "Network › Get firewall rules",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-NetRoute | Select DestinationPrefix,NextHop,InterfaceAlias",
+            "description": "Network › Get routing table",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "netsh wlan show profiles",
+            "description": "Network › Get Wi-Fi profiles",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "New-PSDrive -Name '<drive_letter>' -PSProvider FileSystem -Root '<\\\\server\\share>' -Persist",
+            "description": "Network › Map network drive",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Remove-PSDrive -Name '<drive_letter>'",
+            "description": "Network › Remove mapped drive",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-ComputerInfo | Select WindowsProductName,WindowsVersion,OsArchitecture,CsProcessors,CsTotalPhysicalMemory",
+            "description": "System › Get OS and system info",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "(Get-Date) - (gcim Win32_OperatingSystem).LastBootUpTime",
+            "description": "System › Get system uptime",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "[math]::Round((Get-WmiObject Win32_ComputerSystem).TotalPhysicalMemory / 1GB, 2)",
+            "description": "System › Get installed RAM",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-WmiObject Win32_Processor | Select Name,NumberOfCores,MaxClockSpeed",
+            "description": "System › Get CPU info",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-PSDrive -PSProvider FileSystem | Select Name,Used,Free,Root",
+            "description": "System › Get disk usage",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "[System.Environment]::OSVersion.Version",
+            "description": "System › Get Windows version",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "$env:<VARIABLE_NAME>",
+            "description": "System › Get environment variable",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "$env:<VARIABLE_NAME> = '<value>'",
+            "description": "System › Set environment variable (session)",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-ItemProperty HKLM:\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\* | Select DisplayName,DisplayVersion,Publisher | Sort DisplayName",
+            "description": "System › Get all installed programs",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-WindowsOptionalFeature -Online | Where-Object {$_.State -eq 'Enabled'} | Select FeatureName",
+            "description": "System › Get Windows features",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Enable-WindowsOptionalFeature -Online -FeatureName <feature_name> -All",
+            "description": "System › Enable Windows feature",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-HotFix | Sort InstalledOn -Descending | Select HotFixID,Description,InstalledOn",
+            "description": "System › Get hotfix / patch history",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Stop-Computer -Force",
+            "description": "System › Shut down computer",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "logoff",
+            "description": "System › Log off current user",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-Process | Sort CPU -Descending | Select -First 20 Name,CPU,WorkingSet",
+            "description": "Processes › Get top CPU processes",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-Process | Sort WorkingSet -Descending | Select -First 20 Name,CPU,@{N='Memory(MB)';E={[math]::Round($_.WorkingSet/1MB,2)}}",
+            "description": "Processes › Get top memory processes",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Stop-Process -Name '<process_name>' -Force",
+            "description": "Processes › Kill process by name",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Start-Process -FilePath '<path>' -ArgumentList '<args>'",
+            "description": "Processes › Start a process",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Start-Process -FilePath '<path>' -Verb RunAs",
+            "description": "Processes › Run process as admin",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-Service -Name '<service_name>'",
+            "description": "Services › Get service status",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Restart-Service -Name '<service_name>' -Force",
+            "description": "Services › Restart a service",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": "2026-04-21T22:24:11.258406",
+            "use_count": 1,
+            "copied_at": "2026-04-21T22:24:28.939386"
+        },
+        {
+            "command": "Set-Service -Name '<service_name>' -StartupType <Automatic|Manual|Disabled>",
+            "description": "Services › Set service startup type",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-Service | Where-Object {$_.Status -eq 'Stopped'} | Select Name,DisplayName",
+            "description": "Services › Get all stopped services",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-Service -ComputerName <computer_name>",
+            "description": "Services › Get services on remote computer",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-EventLog -LogName System -EntryType Error -Newest 50 | Select TimeGenerated,Source,Message",
+            "description": "Events › Get recent system errors",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-EventLog -LogName Application -EntryType Error -Newest 50 | Select TimeGenerated,Source,Message",
+            "description": "Events › Get recent application errors",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-WinEvent -LogName Security -MaxEvents 100 | Select TimeCreated,Id,Message",
+            "description": "Events › Get security log events",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-WinEvent -FilterHashtable @{LogName='<LogName>'; Id=<EventID>} -MaxEvents 50",
+            "description": "Events › Get events by event ID",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Clear-EventLog -LogName '<LogName>'",
+            "description": "Events › Clear event log",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-EventLog -LogName <LogName> -Newest 1000 | Export-Csv '<output.csv>' -NoTypeInformation",
+            "description": "Events › Export event log to CSV",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-WinEvent -LogName '<LogName>' | Where-Object {$_.Message -like '*<search_text>*'}",
+            "description": "Events › Search events by message text",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-ScheduledTask | Select TaskName,TaskPath,State",
+            "description": "Tasks › Get all scheduled tasks",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-ScheduledTask -TaskName '<task_name>' | Get-ScheduledTaskInfo",
+            "description": "Tasks › Get scheduled task info",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Enable-ScheduledTask -TaskName '<task_name>'",
+            "description": "Tasks › Enable scheduled task",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Disable-ScheduledTask -TaskName '<task_name>'",
+            "description": "Tasks › Disable scheduled task",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Start-ScheduledTask -TaskName '<task_name>'",
+            "description": "Tasks › Run scheduled task now",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Unregister-ScheduledTask -TaskName '<task_name>' -Confirm:$false",
+            "description": "Tasks › Delete scheduled task",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Enter-PSSession -ComputerName <computer_name> -Credential (Get-Credential)",
+            "description": "Remote › Enter remote PS session",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Invoke-Command -ComputerName <computer_name> -ScriptBlock { <command> }",
+            "description": "Remote › Run command on remote computer",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Invoke-Command -ComputerName <computer_name> -FilePath '<script.ps1>'",
+            "description": "Remote › Run script on remote computer",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Invoke-Command -ComputerName <computer1>,<computer2> -ScriptBlock { <command> }",
+            "description": "Remote › Run command on multiple computers",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Copy-Item -Path '<source>' -Destination '<\\\\computer\\c$\\dest>' -Force",
+            "description": "Remote › Copy file to remote computer",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-ItemProperty -Path 'HKLM:\\<registry_path>' -Name '<value_name>'",
+            "description": "Registry › Get registry value",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Set-ItemProperty -Path 'HKLM:\\<registry_path>' -Name '<value_name>' -Value '<value>'",
+            "description": "Registry › Set registry value",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "New-Item -Path 'HKLM:\\<registry_path>' -Force",
+            "description": "Registry › Create registry key",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Remove-ItemProperty -Path 'HKLM:\\<registry_path>' -Name '<value_name>'",
+            "description": "Registry › Delete registry value",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-ChildItem -Path Cert:\\LocalMachine\\My | Select Subject,Thumbprint,NotAfter",
+            "description": "Certs › List certificates in personal store",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-ChildItem -Path Cert:\\LocalMachine\\My | Where-Object {$_.NotAfter -lt (Get-Date).AddDays(<days>)} | Select Subject,NotAfter",
+            "description": "Certs › Get expiring certificates (within X days)",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Import-Certificate -FilePath '<cert.cer>' -CertStoreLocation Cert:\\LocalMachine\\My",
+            "description": "Certs › Import certificate",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Export-Certificate -Cert (Get-ChildItem Cert:\\LocalMachine\\My\\<thumbprint>) -FilePath '<output.cer>'",
+            "description": "Certs › Export certificate",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-ChildItem Cert:\\LocalMachine\\My\\<thumbprint> | Remove-Item",
+            "description": "Certs › Delete certificate by thumbprint",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Connect-MgGraph -Scopes 'User.Read.All','Group.ReadWrite.All'",
+            "description": "M365 › Connect to Microsoft Graph",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Connect-ExchangeOnline -UserPrincipalName <admin_email>",
+            "description": "M365 › Connect to Exchange Online",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Connect-MsolService",
+            "description": "M365 › Connect to MSOnline",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-MgUser -All | Select DisplayName,UserPrincipalName,AccountEnabled",
+            "description": "M365 › Get all M365 users",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-MgUserLicenseDetail -UserId <user_email> | Select SkuPartNumber",
+            "description": "M365 › Get M365 user licenses",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-MgGroupMember -GroupId <group_id> | Select * -ExpandProperty AdditionalProperties",
+            "description": "M365 › Get M365 group members",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Update-MgUser -UserId <user_email> -AccountEnabled:$false",
+            "description": "M365 › Block M365 user sign-in",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Update-MgUser -UserId <user_email> -AccountEnabled:$true",
+            "description": "M365 › Enable M365 user sign-in",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-MsolUser -UserPrincipalName <user_email> | Select DisplayName,StrongAuthenticationRequirements",
+            "description": "M365 › Get MFA status for user",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-MsolUser -All | Where-Object {$_.StrongAuthenticationRequirements.Count -eq 0} | Select UserPrincipalName,DisplayName",
+            "description": "M365 › Get all MFA disabled users",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-MgUser -UserId <user_email> -Property SignInActivity | Select -ExpandProperty SignInActivity",
+            "description": "M365 › Get last sign-in for user",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-Mailbox -Identity <user_email> | Select DisplayName,PrimarySmtpAddress,ProhibitSendQuota",
+            "description": "M365 › Get mailbox info",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-MailboxStatistics -Identity <user_email> | Select DisplayName,TotalItemSize,ItemCount",
+            "description": "M365 › Get mailbox size",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-Mailbox -RecipientTypeDetails SharedMailbox | Select DisplayName,PrimarySmtpAddress",
+            "description": "M365 › Get all shared mailboxes",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Add-MailboxPermission -Identity <mailbox_email> -User <user_email> -AccessRights FullAccess -InheritanceType All",
+            "description": "M365 › Add shared mailbox permission",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Remove-MailboxPermission -Identity <mailbox_email> -User <user_email> -AccessRights FullAccess -Confirm:$false",
+            "description": "M365 › Remove mailbox permission",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-DistributionGroupMember -Identity <group_email> | Select Name,PrimarySmtpAddress",
+            "description": "M365 › Get distribution group members",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Set-MailboxAutoReplyConfiguration -Identity <user_email> -AutoReplyState Enabled -InternalMessage '<msg>' -ExternalMessage '<msg>'",
+            "description": "M365 › Set out of office message",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Set-MailboxAutoReplyConfiguration -Identity <user_email> -AutoReplyState Disabled",
+            "description": "M365 › Disable out of office",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-TransportRule | Select Name,State,Priority",
+            "description": "M365 › Get mail flow rules (transport rules)",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-CsOnlineUser -Identity <user_email> | Select TeamsCallingPolicy,TeamsMeetingPolicy",
+            "description": "M365 › Get Teams policy for user",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Revoke-MgUserSignInSession -UserId <user_email>",
+            "description": "M365 › Revoke all M365 user sessions",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Search-UnifiedAuditLog -StartDate <start_date> -EndDate <end_date> -Operations <operation> -UserIds <user_email>",
+            "description": "M365 › Get audit log search",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-MgDeviceManagementManagedDevice | Select DeviceName,ComplianceState,UserPrincipalName",
+            "description": "M365 › Get device compliance status",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Disconnect-ExchangeOnline -Confirm:$false",
+            "description": "M365 › Disconnect from Exchange Online",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-LocalGroupMember -Group 'Administrators' | Select Name,PrincipalSource",
+            "description": "Security › Get local admins",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Add-LocalGroupMember -Group 'Administrators' -Member '<username>'",
+            "description": "Security › Add local admin",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Remove-LocalGroupMember -Group 'Administrators' -Member '<username>'",
+            "description": "Security › Remove local admin",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-LocalUser | Select Name,Enabled,LastLogon",
+            "description": "Security › Get all local users",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Disable-LocalUser -Name '<username>'",
+            "description": "Security › Disable local user",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Get-MpComputerStatus | Select AMProductVersion,AntivirusEnabled,RealTimeProtectionEnabled",
+            "description": "Security › Get Windows Defender status",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Start-MpScan -ScanType QuickScan",
+            "description": "Security › Run Windows Defender quick scan",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "Update-MpSignature",
+            "description": "Security › Update Windows Defender signatures",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "<command> | Out-GridView",
+            "description": "Output › Pipe output to grid view (GUI table)",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "<command> | clip",
+            "description": "Output › Pipe output to clipboard",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "<command> | Select-Object <Property1>,<Property2>",
+            "description": "Output › Select specific properties",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "<command> | Where-Object {$_.<Property> -eq '<value>'}",
+            "description": "Output › Filter by where condition",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "<command> | Sort-Object <Property> -Descending",
+            "description": "Output › Sort by property",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "(<command> | Measure-Object).Count",
+            "description": "Output › Count results",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "<command> | Format-Table -AutoSize",
+            "description": "Output › Format output as table",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        },
+        {
+            "command": "<command> | Out-File -FilePath '<output.txt>'",
+            "description": "Output › Save output to text file",
+            "category": "PowerShell",
+            "favorite": false,
+            "last_used": null,
+            "use_count": 0
+        }
+    ]
+}

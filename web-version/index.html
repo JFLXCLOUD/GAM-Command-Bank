@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GAM Command Bank - Professional Command Manager</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Starfield Background -->
+    <div id="starfield-background" class="starfield-background"></div>
+    
+    <!-- Main Application -->
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <i class="fas fa-terminal logo-icon"></i>
+                    <div class="logo-text">
+                        <h1>GAM Command Bank</h1>
+                        <p>Professional Command Manager</p>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button class="theme-toggle" id="themeToggle" title="Toggle Dark Mode">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button class="settings-btn" title="Settings">
+                        <i class="fas fa-cog"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation Tabs -->
+        <nav class="tab-navigation">
+            <button class="tab-btn active" data-tab="gam">
+                <i class="fas fa-cloud"></i>
+                <span>GAM Commands</span>
+            </button>
+            <button class="tab-btn" data-tab="ad">
+                <i class="fas fa-building"></i>
+                <span>AD Commands</span>
+            </button>
+            <button class="tab-btn" data-tab="powershell">
+                <i class="fas fa-terminal"></i>
+                <span>PowerShell</span>
+            </button>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- GAM Commands Tab -->
+            <div class="tab-content active" id="gam-tab">
+                <div class="content-grid">
+                    <!-- Add Command Section -->
+                    <section class="command-input-section">
+                        <div class="section-header">
+                            <h2><i class="fas fa-plus-circle"></i> Add New GAM Command</h2>
+                        </div>
+                        <div class="input-group">
+                            <label for="gam-command">GAM Command:</label>
+                            <input type="text" id="gam-command" placeholder="e.g., gam user &lt;user&gt; suspended on" class="command-input">
+                        </div>
+                        <div class="input-group">
+                            <label for="gam-description">Description:</label>
+                            <input type="text" id="gam-description" placeholder="Brief description of what this command does" class="description-input">
+                        </div>
+                        <div class="button-group">
+                            <button class="btn btn-success" onclick="addCommand('gam')">
+                                <i class="fas fa-plus"></i> Add Command
+                            </button>
+                            <button class="btn btn-danger" onclick="removeCommand('gam')">
+                                <i class="fas fa-trash"></i> Remove Selected
+                            </button>
+                        </div>
+                        <div class="external-link">
+                            <a href="https://sites.google.com/view/gam--commands/home?authuser=0" target="_blank" class="link-btn">
+                                <i class="fas fa-external-link-alt"></i> Complete List of GAM Commands
+                            </a>
+                        </div>
+                    </section>
+
+                    <!-- Execute Command Section -->
+                    <section class="command-execute-section">
+                        <div class="section-header">
+                            <h2><i class="fas fa-play-circle"></i> Execute Commands</h2>
+                        </div>
+                        <div class="input-group">
+                            <label for="gam-select">Select Command:</label>
+                            <select id="gam-select" class="command-select" onchange="updateCommandDisplay('gam')">
+                                <option value="">Choose a command...</option>
+                            </select>
+                        </div>
+                        <div id="gam-params" class="parameters-section"></div>
+                        <div class="output-section">
+                            <label>Command Output:</label>
+                            <textarea id="gam-output" class="command-output" readonly placeholder="Built command will appear here..."></textarea>
+                        </div>
+                        <div class="button-group">
+                            <button class="btn btn-primary" onclick="buildCommand('gam')">
+                                <i class="fas fa-wrench"></i> Build Command
+                            </button>
+                            <button class="btn btn-secondary" onclick="copyCommand('gam')">
+                                <i class="fas fa-copy"></i> Copy to Clipboard
+                            </button>
+                            <button class="btn btn-success" onclick="executeCommand('gam')">
+                                <i class="fas fa-play"></i> Execute
+                            </button>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <!-- AD Commands Tab -->
+            <div class="tab-content" id="ad-tab">
+                <div class="content-grid">
+                    <!-- Add Command Section -->
+                    <section class="command-input-section">
+                        <div class="section-header">
+                            <h2><i class="fas fa-plus-circle"></i> Add New AD Command</h2>
+                        </div>
+                        <div class="input-group">
+                            <label for="ad-command">AD Command:</label>
+                            <input type="text" id="ad-command" placeholder="e.g., Get-ADUser -Identity &lt;user&gt;" class="command-input">
+                        </div>
+                        <div class="input-group">
+                            <label for="ad-description">Description:</label>
+                            <input type="text" id="ad-description" placeholder="Brief description of what this command does" class="description-input">
+                        </div>
+                        <div class="button-group">
+                            <button class="btn btn-success" onclick="addCommand('ad')">
+                                <i class="fas fa-plus"></i> Add Command
+                            </button>
+                            <button class="btn btn-danger" onclick="removeCommand('ad')">
+                                <i class="fas fa-trash"></i> Remove Selected
+                            </button>
+                        </div>
+                    </section>
+
+                    <!-- Execute Command Section -->
+                    <section class="command-execute-section">
+                        <div class="section-header">
+                            <h2><i class="fas fa-play-circle"></i> Execute Commands</h2>
+                        </div>
+                        <div class="input-group">
+                            <label for="ad-select">Select Command:</label>
+                            <select id="ad-select" class="command-select" onchange="updateCommandDisplay('ad')">
+                                <option value="">Choose a command...</option>
+                            </select>
+                        </div>
+                        <div id="ad-params" class="parameters-section"></div>
+                        <div class="output-section">
+                            <label>Command Output:</label>
+                            <textarea id="ad-output" class="command-output" readonly placeholder="Built command will appear here..."></textarea>
+                        </div>
+                        <div class="button-group">
+                            <button class="btn btn-primary" onclick="buildCommand('ad')">
+                                <i class="fas fa-wrench"></i> Build Command
+                            </button>
+                            <button class="btn btn-secondary" onclick="copyCommand('ad')">
+                                <i class="fas fa-copy"></i> Copy to Clipboard
+                            </button>
+                            <button class="btn btn-success" onclick="executeCommand('ad')">
+                                <i class="fas fa-play"></i> Execute
+                            </button>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <!-- PowerShell Commands Tab -->
+            <div class="tab-content" id="powershell-tab">
+                <div class="content-grid">
+                    <!-- Add Command Section -->
+                    <section class="command-input-section">
+                        <div class="section-header">
+                            <h2><i class="fas fa-plus-circle"></i> Add New PowerShell Command</h2>
+                        </div>
+                        <div class="input-group">
+                            <label for="powershell-command">PowerShell Command:</label>
+                            <input type="text" id="powershell-command" placeholder="e.g., Get-Process -Name &lt;process_name&gt;" class="command-input">
+                        </div>
+                        <div class="input-group">
+                            <label for="powershell-description">Description:</label>
+                            <input type="text" id="powershell-description" placeholder="Brief description of what this command does" class="description-input">
+                        </div>
+                        <div class="button-group">
+                            <button class="btn btn-success" onclick="addCommand('powershell')">
+                                <i class="fas fa-plus"></i> Add Command
+                            </button>
+                            <button class="btn btn-danger" onclick="removeCommand('powershell')">
+                                <i class="fas fa-trash"></i> Remove Selected
+                            </button>
+                        </div>
+                    </section>
+
+                    <!-- Execute Command Section -->
+                    <section class="command-execute-section">
+                        <div class="section-header">
+                            <h2><i class="fas fa-play-circle"></i> Execute Commands</h2>
+                        </div>
+                        <div class="input-group">
+                            <label for="powershell-select">Select Command:</label>
+                            <select id="powershell-select" class="command-select" onchange="updateCommandDisplay('powershell')">
+                                <option value="">Choose a command...</option>
+                            </select>
+                        </div>
+                        <div id="powershell-params" class="parameters-section"></div>
+                        <div class="output-section">
+                            <label>Command Output:</label>
+                            <textarea id="powershell-output" class="command-output" readonly placeholder="Built command will appear here..."></textarea>
+                        </div>
+                        <div class="button-group">
+                            <button class="btn btn-primary" onclick="buildCommand('powershell')">
+                                <i class="fas fa-wrench"></i> Build Command
+                            </button>
+                            <button class="btn btn-secondary" onclick="copyCommand('powershell')">
+                                <i class="fas fa-copy"></i> Copy to Clipboard
+                            </button>
+                            <button class="btn btn-success" onclick="executeCommand('powershell')">
+                                <i class="fas fa-play"></i> Execute
+                            </button>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </main>
+
+        <!-- Status Bar -->
+        <footer class="status-bar">
+            <div class="status-content">
+                <span id="status-text">Ready - GAM Command Bank Enhanced Web Edition</span>
+                <span class="version-info">v2.0 Web Edition</span>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Scripts -->
+    <script src="starfield.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
