@@ -10,3 +10,8 @@ __pycache__/
 # IDE
 .vscode/
 .idea/
+
+# Local data when GAM_COMMAND_BANK_HOME points at the repo
+settings.json
+*.json.bak
+*.corrupt-*.json
