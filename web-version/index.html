@@ -3,174 +3,153 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark light">
     <title>GAM Command Bank</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="starfield-background" class="starfield-background"></div>
+    <div id="starfield-background" class="starfield-background" aria-hidden="true"></div>
 
-    <div class="app-container">
+    <div class="app" id="app">
 
-        <!-- Header -->
         <header class="app-header">
             <div class="header-accent"></div>
             <span class="header-title">GAM Command Bank</span>
-            <span class="header-version">v3</span>
-            <div class="header-right">
-                <span class="search-icon">⌕</span>
-                <input class="search-input" id="searchInput" type="text" placeholder="Search commands…" autocomplete="off">
-                <button class="search-clear" id="searchClear" title="Clear search">✕</button>
-                <button class="theme-toggle" id="themeToggle" title="Toggle theme">☽</button>
+            <span class="header-version">v4.0</span>
+
+            <div class="search-box">
+                <span class="search-icon" aria-hidden="true">⌕</span>
+                <input id="searchInput" type="search" placeholder="Search all commands" autocomplete="off"
+                       spellcheck="false" aria-label="Search commands" aria-controls="commandList">
+                <kbd class="search-kbd">/</kbd>
             </div>
+
+            <div class="header-actions">
+                <button class="btn success" id="newBtn" title="Add a command (N)">＋ New</button>
+                <div class="menu-wrap">
+                    <button class="icon-btn" id="menuBtn" aria-haspopup="true" aria-expanded="false" title="More">⋯</button>
+                    <div class="menu" id="menu" role="menu" hidden>
+                        <button role="menuitem" data-action="import">Import commands…</button>
+                        <button role="menuitem" data-action="export">Export commands</button>
+                        <button role="menuitem" data-action="builtins">Add missing built-in commands</button>
+                        <hr>
+                        <button role="menuitem" data-action="clear-history">Clear usage history</button>
+                        <button role="menuitem" data-action="forget-values">Forget remembered field values</button>
+                        <hr>
+                        <a role="menuitem" href="https://sites.google.com/view/gam--commands/home" target="_blank" rel="noopener">GAM reference ↗</a>
+                        <a role="menuitem" href="https://shell.cloud.google.com/" target="_blank" rel="noopener">Google Cloud Shell ↗</a>
+                        <button role="menuitem" data-action="shortcuts">Keyboard shortcuts</button>
+                    </div>
+                </div>
+                <button class="icon-btn" id="themeToggle" title="Toggle light / dark">☽</button>
+            </div>
+            <input type="file" id="importFile" accept=".json,application/json" hidden>
         </header>
 
-        <!-- Tabs -->
-        <nav class="tab-nav">
-            <button class="tab-btn active" data-tab="gam">◈ GAM <span class="tab-count" id="gam-count"></span></button>
-            <button class="tab-btn" data-tab="ad">⊞ AD <span class="tab-count" id="ad-count"></span></button>
-            <button class="tab-btn" data-tab="powershell">⌨ PS <span class="tab-count" id="ps-count"></span></button>
-        </nav>
+        <div class="layout">
+            <!-- Sidebar: filters + list -->
+            <aside class="sidebar">
+                <div class="chips" id="chips" role="tablist" aria-label="Filter"></div>
+                <div class="list" id="commandList" role="listbox" tabindex="0" aria-label="Commands"></div>
+                <div class="list-info" id="listInfo"></div>
+            </aside>
 
-        <!-- Content -->
-        <main class="main-content">
+            <!-- Detail -->
+            <main class="detail" id="detail">
+                <div class="empty" id="emptyState">
+                    <h2>Pick a command</h2>
+                    <p>Press <kbd>/</kbd> to search, <kbd>↑</kbd> <kbd>↓</kbd> to move,
+                       <kbd>Enter</kbd> to fill in fields and <kbd>Ctrl</kbd>+<kbd>Enter</kbd> to copy.</p>
+                </div>
 
-            <!-- GAM Tab -->
-            <div class="tab-content active" id="gam-tab">
-                <div class="card">
+                <article class="card" id="card" hidden>
                     <div class="card-accent"></div>
                     <div class="card-inner">
-                        <div class="selector-row">
-                            <select id="gam-select" class="cmd-select" onchange="app.onSelectChange('gam')">
-                                <option value="">Choose a command…</option>
-                            </select>
-                            <button class="fav-btn" id="gam-fav" onclick="app.toggleFavorite('gam')" title="Toggle favorite">☆</button>
-                            <button class="icon-btn danger" onclick="app.removeCommand('gam')" title="Remove selected">⌫</button>
-                            <button class="icon-btn ghost" onclick="app.toggleAddPanel('gam')" title="Add new command">＋</button>
-                            <a href="https://sites.google.com/view/gam--commands/home" target="_blank" class="docs-link">↗ Docs</a>
-                        </div>
-                        <div class="add-panel" id="gam-add-panel">
-                            <div class="add-panel-inner">
-                                <div class="add-row">
-                                    <span class="add-label">Command</span>
-                                    <input type="text" id="gam-command" class="text-input mono" placeholder="gam user &lt;user&gt; suspended on">
-                                </div>
-                                <div class="add-row">
-                                    <span class="add-label">Description</span>
-                                    <input type="text" id="gam-description" class="text-input" placeholder="Brief description">
-                                </div>
-                                <div class="add-row">
-                                    <button class="btn success" onclick="app.addCommand('gam')">＋ Save</button>
-                                    <span class="add-hint">Use &lt;placeholder&gt; for variable fields</span>
-                                </div>
+                        <button class="back-btn" id="backBtn">← Back to list</button>
+                        <div class="card-top">
+                            <span class="badge" id="cardBadge"></span>
+                            <h2 class="card-title" id="cardTitle"></h2>
+                            <div class="card-tools">
+                                <button class="fav-btn" id="favBtn" title="Toggle favorite (F)" aria-pressed="false">☆</button>
+                                <button class="btn ghost" id="editBtn" title="Edit (E)">Edit</button>
+                                <button class="btn ghost" id="deleteBtn" title="Delete (Del)">Delete</button>
                             </div>
                         </div>
-                        <div class="params-section" id="gam-params"></div>
-                        <div class="output-wrap">
-                            <textarea id="gam-output" class="output-area" readonly placeholder="Select a command to get started…"></textarea>
-                        </div>
+                        <div class="meta" id="cardMeta"></div>
+
+                        <section id="fieldsSection">
+                            <h3 class="section-label">Fields</h3>
+                            <form class="fields" id="fields" autocomplete="off"></form>
+                        </section>
+
+                        <h3 class="section-label">Command</h3>
+                        <pre class="preview" id="preview" tabindex="0"></pre>
+
                         <div class="action-row">
-                            <button class="btn primary" onclick="app.copyCommand('gam')">⎘ Copy</button>
-                            <button class="btn success" onclick="app.executeCommand('gam')">▶ Execute</button>
-                            <button class="btn warning" onclick="app.clearOutput('gam')">⊘ Clear</button>
+                            <button class="btn primary" id="copyBtn" title="Copy (Ctrl+Enter)">⎘ Copy</button>
+                            <button class="btn success" id="shellBtn" title="Copy and open Google Cloud Shell">↗ Cloud Shell</button>
+                            <button class="btn ghost" id="resetBtn">Clear fields</button>
+                            <a class="docs-link" id="docsLink" href="https://sites.google.com/view/gam--commands/home"
+                               target="_blank" rel="noopener">↗ GAM reference</a>
                         </div>
                     </div>
-                </div>
-            </div>
+                </article>
+            </main>
+        </div>
 
-            <!-- AD Tab -->
-            <div class="tab-content" id="ad-tab">
-                <div class="card">
-                    <div class="card-accent"></div>
-                    <div class="card-inner">
-                        <div class="selector-row">
-                            <select id="ad-select" class="cmd-select" onchange="app.onSelectChange('ad')">
-                                <option value="">Choose a command…</option>
-                            </select>
-                            <button class="fav-btn" id="ad-fav" onclick="app.toggleFavorite('ad')" title="Toggle favorite">☆</button>
-                            <button class="icon-btn danger" onclick="app.removeCommand('ad')" title="Remove selected">⌫</button>
-                            <button class="icon-btn ghost" onclick="app.toggleAddPanel('ad')" title="Add new command">＋</button>
-                        </div>
-                        <div class="add-panel" id="ad-add-panel">
-                            <div class="add-panel-inner">
-                                <div class="add-row">
-                                    <span class="add-label">Command</span>
-                                    <input type="text" id="ad-command" class="text-input mono" placeholder="Get-ADUser -Identity &lt;user&gt;">
-                                </div>
-                                <div class="add-row">
-                                    <span class="add-label">Description</span>
-                                    <input type="text" id="ad-description" class="text-input" placeholder="Brief description">
-                                </div>
-                                <div class="add-row">
-                                    <button class="btn success" onclick="app.addCommand('ad')">＋ Save</button>
-                                    <span class="add-hint">Use &lt;placeholder&gt; for variable fields</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="params-section" id="ad-params"></div>
-                        <div class="output-wrap">
-                            <textarea id="ad-output" class="output-area" readonly placeholder="Select a command to get started…"></textarea>
-                        </div>
-                        <div class="action-row">
-                            <button class="btn primary" onclick="app.copyCommand('ad')">⎘ Copy</button>
-                            <button class="btn success" onclick="app.executeCommand('ad')">▶ Execute</button>
-                            <button class="btn warning" onclick="app.clearOutput('ad')">⊘ Clear</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- PowerShell Tab -->
-            <div class="tab-content" id="powershell-tab">
-                <div class="card">
-                    <div class="card-accent"></div>
-                    <div class="card-inner">
-                        <div class="selector-row">
-                            <select id="powershell-select" class="cmd-select" onchange="app.onSelectChange('powershell')">
-                                <option value="">Choose a command…</option>
-                            </select>
-                            <button class="fav-btn" id="powershell-fav" onclick="app.toggleFavorite('powershell')" title="Toggle favorite">☆</button>
-                            <button class="icon-btn danger" onclick="app.removeCommand('powershell')" title="Remove selected">⌫</button>
-                            <button class="icon-btn ghost" onclick="app.toggleAddPanel('powershell')" title="Add new command">＋</button>
-                        </div>
-                        <div class="add-panel" id="powershell-add-panel">
-                            <div class="add-panel-inner">
-                                <div class="add-row">
-                                    <span class="add-label">Command</span>
-                                    <input type="text" id="powershell-command" class="text-input mono" placeholder="Get-Process -Name &lt;process_name&gt;">
-                                </div>
-                                <div class="add-row">
-                                    <span class="add-label">Description</span>
-                                    <input type="text" id="powershell-description" class="text-input" placeholder="Brief description">
-                                </div>
-                                <div class="add-row">
-                                    <button class="btn success" onclick="app.addCommand('powershell')">＋ Save</button>
-                                    <span class="add-hint">Use &lt;placeholder&gt; for variable fields</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="params-section" id="powershell-params"></div>
-                        <div class="output-wrap">
-                            <textarea id="powershell-output" class="output-area" readonly placeholder="Select a command to get started…"></textarea>
-                        </div>
-                        <div class="action-row">
-                            <button class="btn primary" onclick="app.copyCommand('powershell')">⎘ Copy</button>
-                            <button class="btn success" onclick="app.executeCommand('powershell')">▶ Execute</button>
-                            <button class="btn warning" onclick="app.clearOutput('powershell')">⊘ Clear</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </main>
-
-        <!-- Status Bar -->
         <footer class="status-bar">
-            <span id="status-text">● Ready</span>
-            <span id="total-count"></span>
+            <span id="statusText" role="status" aria-live="polite">Ready</span>
+            <span id="storageInfo"></span>
         </footer>
-
     </div>
 
+    <!-- Add / edit -->
+    <dialog class="dialog" id="editDialog">
+        <form method="dialog" id="editForm">
+            <h2 id="editTitle">New Command</h2>
+            <label>Category
+                <select id="editCategory"></select>
+            </label>
+            <label>Description
+                <input id="editDescription" type="text" placeholder="e.g. Users › Suspend user" required>
+            </label>
+            <label>Command
+                <textarea id="editCommand" rows="4" spellcheck="false" placeholder="gam user &lt;user&gt; suspended on" required></textarea>
+            </label>
+            <p class="hint" id="editHint"></p>
+            <p class="error" id="editError" role="alert"></p>
+            <div class="dialog-actions">
+                <button type="button" class="btn ghost" id="editCancel">Cancel</button>
+                <button type="submit" class="btn primary">Save</button>
+            </div>
+        </form>
+    </dialog>
+
+    <!-- Shortcuts -->
+    <dialog class="dialog" id="helpDialog">
+        <h2>Keyboard shortcuts</h2>
+        <dl class="shortcuts">
+            <dt>/</dt><dd>Search</dd>
+            <dt>↑ ↓</dt><dd>Move through the list</dd>
+            <dt>Enter</dt><dd>Fill in fields (or copy when there are none)</dd>
+            <dt>Ctrl+Enter</dt><dd>Copy the finished command</dd>
+            <dt>N</dt><dd>New command</dd>
+            <dt>E</dt><dd>Edit command</dd>
+            <dt>F</dt><dd>Toggle favorite</dd>
+            <dt>Del</dt><dd>Delete (undo with Ctrl+Z)</dd>
+            <dt>1 … 6</dt><dd>All, Favorites, Recent, GAM, AD, PowerShell</dd>
+            <dt>Esc</dt><dd>Clear search / close</dd>
+            <dt>?</dt><dd>This help</dd>
+        </dl>
+        <form method="dialog" class="dialog-actions"><button class="btn ghost">Close</button></form>
+    </dialog>
+
+    <div class="toast" id="toast" hidden>
+        <span id="toastText"></span>
+        <button id="toastAction" class="toast-action"></button>
+    </div>
+
+    <script src="core.js"></script>
     <script src="starfield.js"></script>
     <script src="app.js"></script>
 </body>
