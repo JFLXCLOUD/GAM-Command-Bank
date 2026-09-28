@@ -82,10 +82,14 @@ A file exported from the web version imports into the desktop app, and the other
 ```
 GAM-Command-Bank/
 ├── command_bank.py        # Desktop UI (tkinter)
+├── chrome.py              # Window chrome: icons, title bar, menu bar, dialogs
 ├── command_store.py       # Storage, search and placeholder logic (no UI)
 ├── commands.json          # Built-in command library
 ├── GAM_Command_Bank.spec  # PyInstaller build
-├── icon.ico
+├── version_info.txt       # Exe version details (name/version shown by Windows)
+├── icon.ico               # App icon, all sizes (generated)
+├── assets/                # Icon PNGs used inside the app (generated)
+├── tools/make_icon.py     # Regenerates icon.ico and assets/
 ├── tests/                 # python -m unittest discover -s tests
 │                          # node --test tests/web_core.test.js
 └── web-version/
@@ -103,13 +107,19 @@ pip install pyinstaller
 pyinstaller GAM_Command_Bank.spec
 ```
 
+Every pull request also builds the exe on Windows (`.github/workflows/build.yml`). You can download it from the run's **Artifacts** section and try it before releasing.
+
+When you bump the version, update `APP_VERSION` in `command_store.py` and the numbers in `version_info.txt`.
+
+To change the icon, edit `tools/make_icon.py` and run `python tools/make_icon.py`. It needs `pip install pillow`.
+
 ## Publishing a Release
 
 Pushing a version tag runs `.github/workflows/release.yml` on a Windows runner. The workflow runs the tests, builds the exe, zips the web version, and publishes a GitHub release. The release notes come from `.github/releases/<tag>.md`.
 
 ```
-git tag v4.0.0
-git push origin v4.0.0
+git tag v4.1.0
+git push origin v4.1.0
 ```
 
 You can also go to **Actions › Release › Run workflow** on GitHub and enter a tag name. That releases the latest commit on the branch you pick, and creates the tag if it doesn't exist.

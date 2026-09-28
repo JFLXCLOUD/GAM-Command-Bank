@@ -5,7 +5,7 @@ a = Analysis(
     ['command_bank.py'],
     pathex=[],
     binaries=[],
-    datas=[('commands.json', '.'), ('icon.ico', '.')],
+    datas=[('commands.json', '.'), ('icon.ico', '.'), ('assets/icon-*.png', 'assets')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
@@ -36,4 +36,5 @@ exe = EXE(
     codesign_identity=None,
     entitlements_file=None,
     icon=['icon.ico'],
+    version='version_info.txt',
 )

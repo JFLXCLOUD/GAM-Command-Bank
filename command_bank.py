@@ -9,8 +9,9 @@ import threading
 import tkinter as tk
 import tkinter.font as tkfont
 import webbrowser
-from tkinter import filedialog, messagebox, ttk
+from tkinter import filedialog, ttk
 
+import chrome
 import command_store as cs
 from command_store import CATEGORIES, Command, CommandStore, Settings, StoreError
 
@@ -96,7 +97,7 @@ def run_in_thread(argv, out_queue, on_start):
     threading.Thread(target=worker, daemon=True).start()
 
 
-def open_path(path):
+def open_path(path, on_error=None):
     try:
         if IS_WINDOWS:
             os.startfile(path)  # noqa: S606 - opening a local folder
@@ -105,7 +106,8 @@ def open_path(path):
         else:
             subprocess.Popen(["xdg-open", path])
     except Exception as exc:
-        messagebox.showerror("Open Folder", str(exc))
+        if on_error:
+            on_error(str(exc))
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -173,6 +175,7 @@ class CommandDialog:
         x = app.root.winfo_rootx() + (app.root.winfo_width() - win.winfo_width()) // 2
         y = app.root.winfo_rooty() + 80
         win.geometry(f"+{max(x, 0)}+{max(y, 0)}")
+        app.style_window(win)
         win.grab_set()
         (self.cmd_text if not command else self.desc_entry).focus_set()
 
@@ -217,9 +220,12 @@ class CommandManager:
 
     def __init__(self, root):
         self.root = root
+        root.withdraw()  # shown once built and styled, so there's no white flash
         root.title(cs.APP_NAME)
-        root.minsize(900, 560)
-        self._set_icon()
+        root.minsize(980, 560)
+        root.config(menu="")
+        self.icons = chrome.load_icon_images(root)
+        chrome.apply_app_icon(root, self.icons)
 
         data_dir = cs.resolve_data_dir()
         self.settings = Settings(os.path.join(data_dir, cs.SETTINGS_FILENAME))
@@ -243,21 +249,31 @@ class CommandManager:
         self._run_queue: queue.Queue = queue.Queue()
 
         self.style = ttk.Style()
+        self.menubar = None
         self._build_all()
         self._bind_keys()
         root.protocol("WM_DELETE_WINDOW", self._on_close)
+        self.style_window(root)
+        root.deiconify()
         self.load_all_commands()
 
     # =========================================================================
     # SETUP
     # =========================================================================
-    def _set_icon(self):
-        try:
-            icon_path = cs.resource_path("icon.ico")
-            if IS_WINDOWS and os.path.exists(icon_path):
-                self.root.iconbitmap(icon_path)
-        except Exception:
-            pass
+    def style_window(self, win):
+        """Match a window's title bar to the current theme (Windows)."""
+        chrome.style_title_bar(win, self.C, self._is_dark)
+
+    # themed replacements for the system message boxes
+    def alert(self, title, message, kind="info", code=None):
+        chrome.themed_dialog(self, title, message, kind=kind, code=code)
+
+    def confirm(self, title, message, ok_label="OK", kind="question", code=None,
+                ok_style="P", default_ok=True):
+        return chrome.themed_dialog(
+            self, title, message, kind=kind, code=code, cancel_value=False,
+            buttons=(("Cancel", False, "Gh"), (ok_label, True, ok_style)),
+            default=1 if default_ok else 0)
 
     def _init_fonts(self):
         families = set(tkfont.families(self.root))
@@ -333,56 +349,51 @@ class CommandManager:
     # =========================================================================
     # MENU
     # =========================================================================
-    def _create_menu(self):
-        C = self.C
-        kw = dict(bg=C["surface"], fg=C["text"], activebackground=C["primary"],
-                  activeforeground="#fff", borderwidth=0, relief="flat", tearoff=0)
-        menubar = tk.Menu(self.root, **{k: v for k, v in kw.items() if k != "tearoff"})
-
-        m = tk.Menu(menubar, **kw)
-        m.add_command(label="New Command…", accelerator="Ctrl+N", command=self.new_command)
-        m.add_separator()
-        m.add_command(label="Import Commands…", command=self.import_commands)
-        m.add_command(label="Export Commands…", command=self.export_commands)
-        m.add_command(label="Add Missing Built-in Commands", command=self.merge_library)
-        m.add_separator()
-        m.add_command(label="Open Data Folder", command=lambda: open_path(os.path.dirname(self.store.path)))
-        m.add_command(label="Reload", accelerator="F5", command=self.load_all_commands)
-        m.add_separator()
-        m.add_command(label="Exit", command=self._on_close)
-        menubar.add_cascade(label="File", menu=m)
-
-        m = tk.Menu(menubar, **kw)
-        m.add_command(label="Edit Command…", accelerator="Ctrl+E", command=self.edit_command)
-        m.add_command(label="Toggle Favorite", accelerator="Ctrl+D", command=self.toggle_favorite)
-        m.add_command(label="Delete Command", accelerator="Del", command=self.delete_command)
-        m.add_command(label="Undo Delete", accelerator="Ctrl+Z", command=self.undo_delete)
-        m.add_separator()
-        m.add_command(label="Clear Usage History", command=self.clear_history)
-        m.add_command(label="Forget Remembered Field Values", command=self.clear_recent_values)
-        menubar.add_cascade(label="Edit", menu=m)
-
-        m = tk.Menu(menubar, **kw)
-        for i, f in enumerate(self.FILTERS, 1):
-            m.add_command(label=self._filter_label(f, counts=False), accelerator=f"Ctrl+{i}",
-                          command=lambda f=f: self.set_filter(f))
-        m.add_separator()
-        m.add_command(label="Toggle Light / Dark", accelerator="Ctrl+T", command=self._toggle_theme)
-        menubar.add_cascade(label="View", menu=m)
-
-        m = tk.Menu(menubar, **kw)
-        m.add_command(label="GAM People", command=lambda: webbrowser.open("https://sites.google.com/view/gam--commands/people"))
-        m.add_command(label="GAM Services", command=lambda: webbrowser.open("https://sites.google.com/view/gam--commands/services"))
-        m.add_command(label="GAM Full Reference", command=lambda: webbrowser.open(GAM_REFERENCE))
-        m.add_command(label="Google Cloud Shell", command=lambda: webbrowser.open(CLOUD_SHELL))
-        menubar.add_cascade(label="Reference", menu=m)
-
-        m = tk.Menu(menubar, **kw)
-        m.add_command(label="Keyboard Shortcuts", accelerator="F1", command=self._show_shortcuts)
-        m.add_command(label="About", command=self._show_about)
-        menubar.add_cascade(label="Help", menu=m)
-
-        self.root.config(menu=menubar)
+    def _menus(self):
+        sep = chrome.SEPARATOR
+        data_dir = lambda: open_path(os.path.dirname(self.store.path),
+                                     lambda err: self.alert("Open Folder", err, "error"))
+        link = lambda url: (lambda: webbrowser.open(url))
+        return [
+            ("File", [
+                ("New Command…", "Ctrl+N", self.new_command),
+                sep,
+                ("Import Commands…", "", self.import_commands),
+                ("Export Commands…", "", self.export_commands),
+                ("Add Missing Built-in Commands", "", self.merge_library),
+                sep,
+                ("Open Data Folder", "", data_dir),
+                ("Reload", "F5", self.load_all_commands),
+                sep,
+                ("Exit", "", self._on_close),
+            ]),
+            ("Edit", [
+                ("Edit Command…", "Ctrl+E", self.edit_command),
+                ("Toggle Favorite", "Ctrl+D", self.toggle_favorite),
+                ("Delete Command", "Del", self.delete_command),
+                ("Undo Delete", "Ctrl+Z", self.undo_delete),
+                sep,
+                ("Clear Usage History", "", self.clear_history),
+                ("Forget Remembered Field Values", "", self.clear_recent_values),
+            ]),
+            ("View", [
+                *[(self._filter_label(f, counts=False), f"Ctrl+{i}", lambda f=f: self.set_filter(f))
+                  for i, f in enumerate(self.FILTERS, 1)],
+                sep,
+                ("Light Theme" if self._is_dark else "Dark Theme", "Ctrl+T", self._toggle_theme),
+            ]),
+            ("Reference", [
+                ("GAM People", "", link("https://sites.google.com/view/gam--commands/people")),
+                ("GAM Services", "", link("https://sites.google.com/view/gam--commands/services")),
+                ("GAM Full Reference", "", link(GAM_REFERENCE)),
+                sep,
+                ("Google Cloud Shell", "", link(CLOUD_SHELL)),
+            ]),
+            ("Help", [
+                ("Keyboard Shortcuts", "F1", self._show_shortcuts),
+                ("About", "", self._show_about),
+            ]),
+        ]
 
     # =========================================================================
     # LAYOUT
@@ -390,7 +401,6 @@ class CommandManager:
     def _build_all(self):
         self.root.configure(bg=self.C["bg"])
         self._configure_style()
-        self._create_menu()
         self._create_header()
         self._create_status_bar()
         self._create_body()
@@ -400,11 +410,14 @@ class CommandManager:
         hbar = tk.Frame(self.root, bg=C["surface"], height=50)
         hbar.pack(fill=tk.X)
         hbar.pack_propagate(False)
-        tk.Frame(hbar, bg=C["primary"], width=3).pack(side=tk.LEFT, fill=tk.Y)
+        logo = self.icons.get(32)
+        if logo:
+            tk.Label(hbar, image=logo, bg=C["surface"]).pack(side=tk.LEFT, padx=(14, 0))
         tk.Label(hbar, text=cs.APP_NAME, font=F["title"], fg=C["text"], bg=C["surface"],
-                 padx=14).pack(side=tk.LEFT)
+                 padx=10).pack(side=tk.LEFT)
         tk.Label(hbar, text=f"v{cs.APP_VERSION}", font=F["tiny"], fg=C["muted"],
                  bg=C["surface"]).pack(side=tk.LEFT)
+        self.menubar = chrome.MenuBar(self, hbar, self._menus())
 
         theme_btn = tk.Label(hbar, text="☽" if self._is_dark else "☀", font=F["icon"],
                              fg=C["muted"], bg=C["surface"], cursor="hand2", padx=10)
@@ -419,15 +432,15 @@ class CommandManager:
         # search box with inline hint and clear button
         box = tk.Frame(hbar, bg=C["surface2"], highlightthickness=1,
                        highlightbackground=C["border"], highlightcolor=C["primary"])
-        box.pack(side=tk.RIGHT, pady=10, padx=(0, 10))
+        box.pack(side=tk.RIGHT, pady=10, padx=(16, 10), fill=tk.X, expand=True)  # flexes with window width
         tk.Label(box, text="⌕", font=F["icon"], fg=C["muted"], bg=C["surface2"],
                  padx=6).pack(side=tk.LEFT)
         self.search_var = getattr(self, "search_var", None) or tk.StringVar()
-        self.search_entry = tk.Entry(box, textvariable=self.search_var, width=34, font=F["base"],
+        self.search_entry = tk.Entry(box, textvariable=self.search_var, width=12, font=F["base"],
                                      bg=C["surface2"], fg=C["text"], relief="flat",
                                      insertbackground=C["primary"], highlightthickness=0)
-        self.search_entry.pack(side=tk.LEFT, ipady=4)
-        self._search_hint = tk.Label(box, text="Search all commands   Ctrl+F", font=F["small"],
+        self.search_entry.pack(side=tk.LEFT, ipady=4, fill=tk.X, expand=True)
+        self._search_hint = tk.Label(box, text="Search   Ctrl+F", font=F["small"],
                                      fg=C["dim"], bg=C["surface2"])
         self._search_hint.bind("<Button-1>", lambda e: self.search_entry.focus_set())
         clr = tk.Label(box, text="✕", font=F["small"], fg=C["muted"], bg=C["surface2"],
@@ -615,7 +628,8 @@ class CommandManager:
         self.path_label = tk.Label(sb, anchor=tk.E, font=F["tiny"], fg=C["dim"],
                                    bg=C["surface"], padx=12, cursor="hand2")
         self.path_label.pack(side=tk.RIGHT, fill=tk.Y)
-        self.path_label.bind("<Button-1>", lambda e: open_path(os.path.dirname(self.store.path)))
+        self.path_label.bind("<Button-1>", lambda e: open_path(
+            os.path.dirname(self.store.path), lambda err: self.alert("Open Folder", err, "error")))
         self.tip(self.path_label, "Where your commands are saved — click to open the folder")
 
     # =========================================================================
@@ -654,6 +668,15 @@ class CommandManager:
         for seq, fn in keys.items():
             r.bind_all(seq, main_window(fn))
         r.bind_all("<Control-z>", main_window(self.undo_delete, skip_text=True))
+
+        # menu bar: Alt+letter / F10 open menus; outside clicks, focus loss
+        # and window moves close them
+        for i, letter in enumerate("fevrh"):
+            r.bind_all(f"<Alt-{letter}>", main_window(lambda i=i: self.menubar.open(i, keyboard=True)))
+        r.bind_all("<F10>", main_window(lambda: self.menubar.open(0, keyboard=True)))
+        r.bind_all("<Button-1>", lambda e: self.menubar and self.menubar.click_anywhere(e), add="+")
+        r.bind("<FocusOut>", lambda e: r.after(80, lambda: self.menubar and self.menubar.check_focus()), add="+")
+        r.bind("<Configure>", lambda e: self.menubar.close() if (self.menubar and e.widget is r) else None, add="+")
         for i, f in enumerate(self.FILTERS, 1):
             r.bind_all(f"<Control-Key-{i}>", main_window(lambda f=f: self.set_filter(f)))
 
@@ -980,13 +1003,14 @@ class CommandManager:
                 webbrowser.open(CLOUD_SHELL)
                 self.set_status("↗ Cloud Shell opened — the command is on your clipboard.", 8000)
             else:
-                messagebox.showinfo("PowerShell not found",
-                                    "PowerShell isn't available on this system.\n\n"
-                                    "The command was copied to your clipboard instead.")
+                self.alert("PowerShell not found",
+                           "PowerShell isn't available on this system, so the command "
+                           "was copied to your clipboard instead.", "warning")
             return "break"
-        if not messagebox.askyesno("Run command?",
-                                   f"Run this on {os.environ.get('COMPUTERNAME') or 'this computer'}?\n\n{text}",
-                                   icon=messagebox.WARNING, default=messagebox.NO):
+        where = os.environ.get("COMPUTERNAME") or "this computer"
+        if not self.confirm("Run this command?", f"It will run on {where} with your permissions.",
+                            ok_label="▶ Run", kind="warning", code=text, ok_style="G",
+                            default_ok=False):
             return "break"
         self._record_use()
         self.output_section.pack(fill=tk.BOTH, expand=True)
@@ -1052,9 +1076,9 @@ class CommandManager:
         try:
             return fn(*args)
         except StoreError as exc:
-            messagebox.showerror("Not Saved", str(exc))
+            self.alert("Not Saved", str(exc), "error")
         except OSError as exc:
-            messagebox.showerror("Save Error", f"Could not save commands:\n{exc}")
+            self.alert("Save Error", f"Could not save commands: {exc}", "error")
         return None
 
     def new_command(self):
@@ -1134,7 +1158,8 @@ class CommandManager:
                         else f"Removed “{cmd.description}” from favorites.")
 
     def clear_history(self):
-        if messagebox.askyesno("Clear Usage History", "Reset use counts and the Recent list?"):
+        if self.confirm("Clear usage history?", "Use counts and the Recent list will be reset.",
+                        ok_label="Clear", kind="warning", ok_style="R"):
             self._safe(self.store.clear_history)
             self.refresh_list()
             self._show_detail(self.current)
@@ -1152,7 +1177,7 @@ class CommandManager:
             self.store.load()
             self.set_status(self.store.load_message)
         except StoreError as exc:
-            messagebox.showwarning("Could Not Load Commands", str(exc))
+            self.alert("Could not load commands", str(exc), "warning")
             self.set_status("✖ " + str(exc), 15_000)
         self.path_label.config(text=self.store.path)
         self.current = None
@@ -1167,11 +1192,11 @@ class CommandManager:
         try:
             added, skipped = self.store.import_file(path)
         except (OSError, ValueError, StoreError) as exc:
-            messagebox.showerror("Import Failed", str(exc))
+            self.alert("Import failed", str(exc), "error")
             return
         self.refresh_list()
-        messagebox.showinfo("Import Complete",
-                            f"Added {added} command(s).\nSkipped {skipped} already in your bank.")
+        self.alert("Import complete",
+                   f"Added {added} command(s). Skipped {skipped} already in your bank.")
 
     def export_commands(self):
         path = filedialog.asksaveasfilename(title="Export Commands", defaultextension=".json",
@@ -1182,7 +1207,7 @@ class CommandManager:
         try:
             n = self.store.export_file(path)
         except OSError as exc:
-            messagebox.showerror("Export Failed", str(exc))
+            self.alert("Export failed", str(exc), "error")
             return
         self.set_status(f"Exported {n} commands to {os.path.basename(path)}.")
 
@@ -1190,7 +1215,7 @@ class CommandManager:
         try:
             added, _ = self.store.merge_library()
         except StoreError as exc:
-            messagebox.showerror("Not Saved", str(exc))
+            self.alert("Not saved", str(exc), "error")
             return
         self.refresh_list()
         self.set_status(f"Added {added} built-in command(s)." if added
@@ -1221,10 +1246,13 @@ class CommandManager:
             self._status_job = None
         self.search_var.trace_remove("write", self._search_trace)
         self.param_vars, self.param_widgets = {}, []
+        if self.menubar:
+            self.menubar.close()
         for w in self.root.winfo_children():
             w.destroy()
         self.current = None
         self._build_all()
+        self.style_window(self.root)
         self.path_label.config(text=self.store.path)
         self.refresh_list()
         if current:
@@ -1250,6 +1278,13 @@ class CommandManager:
         win.transient(self.root)
         tk.Frame(win, bg=C["primary"], height=3).pack(fill=tk.X)
         win.bind("<Escape>", lambda e: win.destroy())
+        self.style_window(win)
+
+        def center():
+            x = self.root.winfo_rootx() + (self.root.winfo_width() - win.winfo_reqwidth()) // 2
+            y = self.root.winfo_rooty() + max((self.root.winfo_height() - win.winfo_reqheight()) // 3, 40)
+            win.geometry(f"+{max(x, 0)}+{max(y, 0)}")
+        win.after_idle(center)
         return win
 
     def _show_shortcuts(self):
@@ -1262,6 +1297,7 @@ class CommandManager:
             ("Ctrl+N", "New command"), ("Ctrl+E", "Edit command"), ("Ctrl+D", "Toggle favorite"),
             ("Del", "Delete (in the list)"), ("Ctrl+Z", "Undo delete"),
             ("Ctrl+1 … 6", "All, Favorites, Recent, GAM, AD, PowerShell"),
+            ("Alt+F / E / V / R / H", "Open a menu (F10 for File)"),
             ("Ctrl+T", "Light / dark"), ("F5", "Reload from disk"), ("Esc", "Clear search"),
         ]
         grid = tk.Frame(win, bg=C["surface"])
@@ -1276,7 +1312,9 @@ class CommandManager:
     def _show_about(self):
         C, F = self.C, self.F
         win = self._dialog("About")
-        tk.Label(win, text=cs.APP_NAME, font=F["title"], fg=C["text"], bg=C["surface"]).pack(pady=(18, 2), padx=40)
+        if self.icons.get(64):
+            tk.Label(win, image=self.icons[64], bg=C["surface"]).pack(pady=(20, 0))
+        tk.Label(win, text=cs.APP_NAME, font=F["title"], fg=C["text"], bg=C["surface"]).pack(pady=(10, 2), padx=40)
         tk.Label(win, text=f"v{cs.APP_VERSION}", font=F["small"], fg=C["muted"], bg=C["surface"]).pack()
         tk.Label(win, text="Author:   Jeff Burns\nContact:  JeffBurns@JFLX.CLOUD", font=F["small"],
                  fg=C["accent"], bg=C["surface"], justify=tk.LEFT).pack(pady=(10, 0))
@@ -1287,13 +1325,8 @@ class CommandManager:
 
 # ─────────────────────────────────────────────────────────────────────────────
 def main():
-    if IS_WINDOWS:
-        try:  # crisp text on high-DPI displays
-            import ctypes
-            ctypes.windll.shcore.SetProcessDpiAwareness(1)
-        except Exception:
-            pass
-    root = tk.Tk()
+    chrome.set_app_identity()   # own taskbar identity + DPI awareness, before Tk starts
+    root = tk.Tk(className="GAMCommandBank")
     CommandManager(root)
     root.mainloop()
 

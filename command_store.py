@@ -34,7 +34,7 @@ from datetime import datetime
 from typing import Iterable
 
 APP_NAME = "GAM Command Bank"
-APP_VERSION = "4.0"
+APP_VERSION = "4.1"
 DATA_FILENAME = "commands.json"
 SETTINGS_FILENAME = "settings.json"
 DATA_DIR_ENV = "GAM_COMMAND_BANK_HOME"

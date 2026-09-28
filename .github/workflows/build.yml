@@ -1,0 +1,36 @@
+name: Build
+
+# Builds the exe for every pull request so it can be tried before release.
+# Download it from the run's "Artifacts" section.
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run tests
+        run: |
+          python -m unittest discover -s tests -v
+          node --test tests/web_core.test.js
+
+      - name: Build exe
+        run: |
+          python -m pip install --upgrade pip pyinstaller
+          pyinstaller --noconfirm GAM_Command_Bank.spec
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: GAM_Command_Bank-exe
+          path: dist/GAM_Command_Bank.exe
