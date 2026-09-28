@@ -1,0 +1,70 @@
+name: Release
+
+# Push a tag like v4.0.0 to build the Windows exe and publish a release.
+# Release notes are read from .github/releases/<tag>.md when that file exists.
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Existing tag to (re)build and release, e.g. v4.0.0'
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    env:
+      TAG: ${{ github.event.inputs.tag || github.ref_name }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.TAG }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run tests
+        run: |
+          python -m unittest discover -s tests -v
+          node --test tests/web_core.test.js
+
+      - name: Build exe
+        run: |
+          python -m pip install --upgrade pip pyinstaller
+          pyinstaller --noconfirm GAM_Command_Bank.spec
+
+      - name: Package web version
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force staging/GAM_Command_Bank_Web | Out-Null
+          Copy-Item -Recurse web-version staging/GAM_Command_Bank_Web/
+          Copy-Item commands.json staging/GAM_Command_Bank_Web/
+          Compress-Archive -Path staging/GAM_Command_Bank_Web/* -DestinationPath GAM_Command_Bank_Web.zip
+
+      - name: Pick release notes
+        id: notes
+        shell: pwsh
+        run: |
+          $path = ".github/releases/$env:TAG.md"
+          if (-not (Test-Path $path)) { "Release $env:TAG" | Set-Content release-notes.md; $path = "release-notes.md" }
+          "path=$path" >> $env:GITHUB_OUTPUT
+
+      - name: Publish release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ env.TAG }}
+          name: GAM Command Bank ${{ env.TAG }}
+          body_path: ${{ steps.notes.outputs.path }}
+          files: |
+            dist/GAM_Command_Bank.exe
+            commands.json
+            GAM_Command_Bank_Web.zip

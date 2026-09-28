@@ -103,6 +103,17 @@ pip install pyinstaller
 pyinstaller GAM_Command_Bank.spec
 ```
 
+## Publishing a Release
+
+Pushing a version tag runs `.github/workflows/release.yml` on a Windows runner. The workflow runs the tests, builds the exe, zips the web version, and publishes a GitHub release. The release notes come from `.github/releases/<tag>.md`.
+
+```
+git tag v4.0.0
+git push origin v4.0.0
+```
+
+To re-run the workflow for a tag that already exists, use **Actions › Release › Run workflow** on GitHub.
+
 ## Author
 
 Jeff Burns - Jeff.Burns@JFLX.CLOUD
