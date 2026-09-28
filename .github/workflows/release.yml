@@ -1,6 +1,9 @@
 name: Release
 
-# Push a tag like v4.0.0 to build the Windows exe and publish a release.
+# Build the Windows exe and publish a GitHub release, either by:
+#   * pushing a tag like v4.0.0 (releases the tagged commit), or
+#   * Actions > Release > Run workflow with a tag name (releases the latest
+#     commit of the chosen branch and creates the tag if it doesn't exist).
 # Release notes are read from .github/releases/<tag>.md when that file exists.
 on:
   push:
@@ -8,7 +11,7 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: 'Existing tag to (re)build and release, e.g. v4.0.0'
+        description: 'Tag to release, e.g. v4.0.0 (created if missing)'
         required: true
 
 permissions:
@@ -20,9 +23,8 @@ jobs:
     env:
       TAG: ${{ github.event.inputs.tag || github.ref_name }}
     steps:
+      # github.sha is the tagged commit for tag pushes and the branch head for manual runs
       - uses: actions/checkout@v4
-        with:
-          ref: ${{ env.TAG }}
 
       - uses: actions/setup-python@v5
         with:
@@ -62,6 +64,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ env.TAG }}
+          target_commitish: ${{ github.sha }}
           name: GAM Command Bank ${{ env.TAG }}
           body_path: ${{ steps.notes.outputs.path }}
           files: |
