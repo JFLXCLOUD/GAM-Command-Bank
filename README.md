@@ -112,7 +112,7 @@ git tag v4.0.0
 git push origin v4.0.0
 ```
 
-To re-run the workflow for a tag that already exists, use **Actions › Release › Run workflow** on GitHub.
+You can also go to **Actions › Release › Run workflow** on GitHub and enter a tag name. That releases the latest commit on the branch you pick, and creates the tag if it doesn't exist.
 
 ## Author
 
