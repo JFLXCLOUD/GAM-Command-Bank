@@ -34,10 +34,13 @@ from datetime import datetime
 from typing import Iterable
 
 APP_NAME = "GAM Command Bank"
-APP_VERSION = "4.0"
+APP_VERSION = "4.1"
 DATA_FILENAME = "commands.json"
 SETTINGS_FILENAME = "settings.json"
 DATA_DIR_ENV = "GAM_COMMAND_BANK_HOME"
+# Placed next to the exe by the Windows installer. Installed copies keep
+# data in the per-user folder, never in the program folder.
+INSTALLED_MARKER = "installed.marker"
 
 CATEGORIES = ("GAM", "AD", "PowerShell")
 
@@ -271,17 +274,27 @@ def resolve_data_dir() -> str:
     """Pick where user data lives.
 
     1. ``GAM_COMMAND_BANK_HOME`` if set.
-    2. The compiled exe's folder, when writable (portable, as before).
-    3. A per-user application-data folder. This is also used when running
-       from source so the repository's ``commands.json`` stays a clean
-       built-in library instead of collecting personal usage stats.
+    2. The per-user application-data folder when installed with the Windows
+       installer (marked by ``installed.marker`` next to the exe), so
+       upgrades and uninstalls never touch the user's commands.
+    3. The standalone exe's folder, when writable (portable, as before).
+    4. The per-user application-data folder otherwise. This is also used
+       when running from source so the repository's ``commands.json``
+       stays a clean built-in library instead of collecting usage stats.
     """
     override = os.environ.get(DATA_DIR_ENV)
     if override:
         return os.path.abspath(os.path.expanduser(override))
-    if getattr(sys, "frozen", False) and _is_writable_dir(app_dir()):
-        return app_dir()
+    if getattr(sys, "frozen", False):
+        if is_installed():
+            return user_data_dir()
+        if _is_writable_dir(app_dir()):
+            return app_dir()
     return user_data_dir()
+
+
+def is_installed() -> bool:
+    return os.path.exists(os.path.join(app_dir(), INSTALLED_MARKER))
 
 
 def builtin_library_path() -> str:

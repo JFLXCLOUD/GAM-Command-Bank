@@ -179,6 +179,59 @@ class SettingsTests(unittest.TestCase):
             self.assertEqual(cs.Settings(p).get("theme"), "dark")
 
 
+class DataDirTests(unittest.TestCase):
+    """Where data lives for source runs, the portable exe and installed copies."""
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.exe_dir = os.path.join(self.tmp.name, "app")
+        os.makedirs(self.exe_dir)
+        self.user_dir = os.path.join(self.tmp.name, "user")
+        self._saved = (getattr(sys, "frozen", None), sys.executable,
+                       os.environ.pop(cs.DATA_DIR_ENV, None), cs.user_data_dir)
+        cs.user_data_dir = lambda: self.user_dir
+
+    def tearDown(self):
+        frozen, exe, env, udd = self._saved
+        if frozen is None:
+            if hasattr(sys, "frozen"):
+                del sys.frozen
+        else:
+            sys.frozen = frozen
+        sys.executable = exe
+        if env is not None:
+            os.environ[cs.DATA_DIR_ENV] = env
+        cs.user_data_dir = udd
+        self.tmp.cleanup()
+
+    def freeze(self):
+        sys.frozen = True
+        sys.executable = os.path.join(self.exe_dir, "GAM_Command_Bank.exe")
+
+    def test_source_run_uses_user_dir(self):
+        if hasattr(sys, "frozen"):
+            del sys.frozen
+        self.assertEqual(cs.resolve_data_dir(), self.user_dir)
+
+    def test_portable_exe_uses_its_folder(self):
+        self.freeze()
+        self.assertEqual(cs.resolve_data_dir(), self.exe_dir)
+
+    def test_installed_exe_uses_user_dir(self):
+        self.freeze()
+        open(os.path.join(self.exe_dir, cs.INSTALLED_MARKER), "w").close()
+        self.assertTrue(cs.is_installed())
+        self.assertEqual(cs.resolve_data_dir(), self.user_dir)
+
+    def test_env_override_wins(self):
+        self.freeze()
+        os.environ[cs.DATA_DIR_ENV] = self.tmp.name
+        try:
+            self.assertEqual(cs.resolve_data_dir(), os.path.abspath(self.tmp.name))
+        finally:
+            del os.environ[cs.DATA_DIR_ENV]
+
+
 class RepoLibraryTests(unittest.TestCase):
     def test_shipped_library_is_valid(self):
         path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "commands.json")
