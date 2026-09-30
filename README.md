@@ -15,10 +15,18 @@ A command library for GAM (Google Workspace admin), Active Directory, and PowerS
 
 ## Getting Started
 
-### Windows Executable (Recommended)
-Download `GAM_Command_Bank.exe` from the [Releases](https://github.com/JFLXCLOUD/GAM-Command-Bank/releases) page and run it. The built-in commands are bundled into the exe.
+### Windows Installer (Recommended)
+Download `GAM_Command_Bank_Setup_<version>.exe` from the [Releases](https://github.com/JFLXCLOUD/GAM-Command-Bank/releases) page and run it.
 
-Windows may show a SmartScreen warning because the executable is unsigned. Click "More info", then "Run anyway".
+- By default it installs for your account only, with no admin rights needed. The first page also offers an install for everyone on the PC.
+- It adds a Start menu shortcut, and a desktop shortcut if you tick the box. It also appears in **Settings › Apps**, where you can uninstall it.
+- To upgrade, run a newer installer. Your commands, favorites and settings are kept, and uninstalling keeps them too.
+- Your commands are saved in `%APPDATA%\GAM Command Bank`. If you used the portable exe before, copy the `commands.json` from next to it into that folder, or use **File › Import Commands…**.
+
+### Portable Exe
+Download `GAM_Command_Bank.exe` from the same page and run it from any folder, such as a USB stick. It needs no install, and it saves its data next to itself.
+
+Windows may show a SmartScreen warning for either download because they are unsigned. Click "More info", then "Run anyway".
 
 ### Desktop Version (Python)
 Requires Python 3.9+ with tkinter.
@@ -64,7 +72,8 @@ By convention, descriptions use `Section › Action`, for example `Users › Sus
 
 | Version | Location |
 | --- | --- |
-| Windows exe | `commands.json` and `settings.json` next to the exe (portable). If that folder is read-only, `%APPDATA%\GAM Command Bank`. |
+| Windows installer | `%APPDATA%\GAM Command Bank`. The data is kept when you upgrade or uninstall. |
+| Portable exe | `commands.json` and `settings.json` next to the exe. If that folder is read-only, `%APPDATA%\GAM Command Bank`. |
 | Python source | `%APPDATA%\GAM Command Bank` (Windows), `~/Library/Application Support/GAM Command Bank` (macOS), `~/.config/gam-command-bank` (Linux) |
 | Web | Browser localStorage. Use Export to back it up or move it. |
 
@@ -89,7 +98,11 @@ GAM-Command-Bank/
 ├── version_info.txt       # Exe version details (name/version shown by Windows)
 ├── icon.ico               # App icon, all sizes (generated)
 ├── assets/                # Icon PNGs used inside the app (generated)
-├── tools/make_icon.py     # Regenerates icon.ico and assets/
+├── installer/             # Inno Setup script for the Windows installer
+├── tools/
+│   ├── make_icon.py       # Regenerates icon.ico, assets/ and installer images
+│   ├── build_installer.ps1  # Builds the portable exe + installer on Windows
+│   └── test_installer.ps1   # Install / launch / uninstall check (used by CI)
 ├── tests/                 # python -m unittest discover -s tests
 │                          # node --test tests/web_core.test.js
 └── web-version/
@@ -100,14 +113,17 @@ GAM-Command-Bank/
     └── starfield.js
 ```
 
-## Building the Exe
+## Building
+
+On Windows, with Python, `pip install pyinstaller` and [Inno Setup 6](https://jrsoftware.org/isdl.php) (`winget install JRSoftware.InnoSetup`):
 
 ```
-pip install pyinstaller
-pyinstaller GAM_Command_Bank.spec
+powershell -ExecutionPolicy Bypass -File tools\build_installer.ps1
 ```
 
-Every pull request also builds the exe on Windows (`.github/workflows/build.yml`). You can download it from the run's **Artifacts** section and try it before releasing.
+This produces `dist\GAM_Command_Bank.exe` (portable) and `dist\GAM_Command_Bank_Setup_<version>.exe`. If you only need the portable exe, run `pyinstaller GAM_Command_Bank.spec`.
+
+Every pull request also builds both on Windows and tests the installer by installing, launching and uninstalling it (`.github/workflows/build.yml`). You can download both from the run's **Artifacts** section and try them before releasing.
 
 When you bump the version, update `APP_VERSION` in `command_store.py` and the numbers in `version_info.txt`.
 

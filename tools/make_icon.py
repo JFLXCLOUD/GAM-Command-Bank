@@ -1,4 +1,5 @@
-"""Regenerate the app icon (assets/icon-*.png and icon.ico).
+"""Regenerate the app icon (assets/icon-*.png, icon.ico and the installer
+wizard images in installer/).
 
 The icon is drawn from shapes rather than scaled from a bitmap, so every
 size is sharp. Small sizes use a simpler drawing that stays readable.
@@ -69,7 +70,15 @@ def main():
     images[256].save(os.path.join(ROOT, "icon.ico"),
                      sizes=[(s, s) for s in ico_sizes],
                      append_images=[images[s] for s in ico_sizes if s != 256])
-    print("wrote icon.ico and assets/icon-*.png")
+    # Inno Setup wizard corner image: BMP without transparency, on the
+    # wizard's white background; 55px plus 2x for high-DPI screens.
+    for size in (55, 110):
+        pad = round(size * 0.06)
+        canvas = Image.new("RGB", (size, size), (255, 255, 255))
+        icon = draw(size - 2 * pad)
+        canvas.paste(icon, (pad, pad), icon)
+        canvas.save(os.path.join(ROOT, "installer", f"wizard-small-{size}.bmp"))
+    print("wrote icon.ico, assets/icon-*.png and installer/wizard-small-*.bmp")
 
 
 if __name__ == "__main__":
