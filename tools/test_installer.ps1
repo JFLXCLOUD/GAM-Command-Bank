@@ -16,12 +16,23 @@ function Wait-For([scriptblock]$cond, [int]$seconds, [string]$what) {
 Write-Host "Installing $($setup.Name) silently (current user)"
 $p = Start-Process $setup.FullName -ArgumentList '/VERYSILENT', '/SUPPRESSMSGBOXES', '/NORESTART' -Wait -PassThru
 if ($p.ExitCode) { throw "setup exited with $($p.ExitCode)" }
-foreach ($f in 'GAM_Command_Bank.exe', 'installed.marker', 'unins000.exe',
+foreach ($f in 'GAM_Command_Bank.exe', 'installed.marker', 'unins000.exe', 'icon.ico',
                '_internal\commands.json', '_internal\assets\icon-256.png') {
     if (-not (Test-Path "$app\$f")) { throw "installed copy is missing $f" }
 }
 $lnk = "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\GAM Command Bank.lnk"
 if (-not (Test-Path $lnk)) { throw 'Start menu shortcut missing' }
+$shortcut = (New-Object -ComObject WScript.Shell).CreateShortcut($lnk)
+Write-Host "Shortcut icon: $($shortcut.IconLocation)"
+if ($shortcut.IconLocation -notlike "*\GAM Command Bank\icon.ico,*") { throw "shortcut doesn't use the app icon: $($shortcut.IconLocation)" }
+$uninstallKey = Get-ChildItem 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall' |
+    Where-Object { $_.GetValue('DisplayName') -eq 'GAM Command Bank' } | Select-Object -First 1
+if (-not $uninstallKey) { throw 'no Apps & features entry' }
+$displayIcon = $uninstallKey.GetValue('DisplayIcon')
+Write-Host "Apps & features icon: $displayIcon"
+if ($displayIcon -notlike '*\icon.ico') { throw "Apps & features entry doesn't use the app icon: $displayIcon" }
+# the icon file must be a real multi-size icon, not a placeholder
+if ((Get-Item "$app\icon.ico").Length -lt 10KB) { throw 'installed icon.ico looks wrong (too small)' }
 $ver = (Get-Item "$app\GAM_Command_Bank.exe").VersionInfo
 Write-Host "Installed: $($ver.ProductName) $($ver.ProductVersion)"
 if ($ver.ProductName -ne 'GAM Command Bank') { throw "unexpected exe ProductName '$($ver.ProductName)'" }

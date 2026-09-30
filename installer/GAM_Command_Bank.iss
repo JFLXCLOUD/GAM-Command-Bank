@@ -46,7 +46,7 @@ MinVersion=10.0
 OutputDir=..\dist
 OutputBaseFilename=GAM_Command_Bank_Setup_{#AppVersion}
 SetupIconFile=..\icon.ico
-UninstallDisplayIcon={app}\{#AppExe}
+UninstallDisplayIcon={app}\icon.ico
 UninstallDisplayName={#AppName}
 WizardStyle=modern
 WizardSmallImageFile=wizard-small-55.bmp,wizard-small-110.bmp
@@ -70,12 +70,14 @@ Type: filesandordirs; Name: "{app}\_internal"
 [Files]
 Source: "..\dist\GAM_Command_Bank\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "installed.marker"; DestDir: "{app}"; Flags: ignoreversion
+; the app icon, used by the shortcuts and the Apps & features entry
+Source: "..\icon.ico"; DestDir: "{app}"; Flags: ignoreversion
 
 [Icons]
 ; AppUserModelID matches the one the app sets, so a pinned shortcut and the
 ; running window share one taskbar button.
-Name: "{autoprograms}\{#AppName}"; Filename: "{app}\{#AppExe}"; AppUserModelID: "{#AppUserModelID}"
-Name: "{autodesktop}\{#AppName}"; Filename: "{app}\{#AppExe}"; AppUserModelID: "{#AppUserModelID}"; Tasks: desktopicon
+Name: "{autoprograms}\{#AppName}"; Filename: "{app}\{#AppExe}"; IconFilename: "{app}\icon.ico"; AppUserModelID: "{#AppUserModelID}"
+Name: "{autodesktop}\{#AppName}"; Filename: "{app}\{#AppExe}"; IconFilename: "{app}\icon.ico"; AppUserModelID: "{#AppUserModelID}"; Tasks: desktopicon
 
 [Run]
 Filename: "{app}\{#AppExe}"; Description: "{cm:LaunchProgram,{#AppName}}"; Flags: nowait postinstall skipifsilent
